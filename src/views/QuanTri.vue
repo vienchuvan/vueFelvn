@@ -201,6 +201,7 @@
                         activeMenu === 'page_training'
                     " class="space-y-6">
                         <!-- Editor View -->
+                         
                         <ArticleEditor v-if="showEditor" :article="editingArticle" :title="editingTitle" @back="showEditor = false" @save="saveArticle" />
 
                         <!-- List View -->
@@ -261,7 +262,7 @@
                                                 <button @click="editArticle(news)" class="p-1.5 text-blue-600 hover:bg-blue-100 rounded border border-transparent hover:border-blue-200 transition-all">
                                                     <Edit :size="18" />
                                                 </button>
-                                                <button class="p-1.5 text-red-500 hover:bg-red-50 rounded border border-transparent hover:border-red-200 transition-all">
+                                                <button  @click="deleteArticle(news)" class="p-1.5 text-red-500 hover:bg-red-50 rounded border border-transparent hover:border-red-200 transition-all">
                                                     <Trash2 :size="18" />
                                                 </button>
                                             </td>
@@ -468,8 +469,11 @@ export default {
 
         setMenu(menu) {
             this.activeMenu = menu;
-            this.fetchArticles(this.activeMenu, "")
-            console.log("Menu changed to:", menu);
+            
+            const category = this.getCategoryFromMenu();
+            this.fetchArticles(category, "")
+            console.log("Menu changed to:", menu, "Category:", category);
+            
             
         },
 
@@ -611,11 +615,55 @@ export default {
             this.editingTitle = this.getMenuLabel();
             this.showEditor = true;
         },
-
+getCategoryFromMenu() {
+    const menuToCategoryMap = {
+        'page_about': 'about',
+        'page_services': 'service',
+        'page_training': 'training',
+        'news': 'news'
+    };
+    return menuToCategoryMap[this.activeMenu] || 'service';
+},
         saveArticle(formData) {
             console.log("Saving:", formData);
             // TODO: Send to API
             this.showEditor = false;
+        },
+
+          async deleteArticle(article) {
+            const confirmed = confirm(`❓ Bạn chắc chắn muốn xóa bài viết:\n"${article.title?.vi || 'Không xác định'}"\n\nHành động này không thể hoàn tác!`);
+            
+            if (!confirmed) return;
+
+            try {
+                const payload = {
+                    idFun: 113,
+                    id: article.id
+                };
+
+                const response = await fetch('http://localhost:3000/quantri/baiviet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                console.log(data);
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Xóa bài viết thất bại');
+                }
+
+                alert('✅ Xóa bài viết thành công');
+                // Refresh danh sách
+                   const category = this.getCategoryFromMenu();
+                this.fetchArticles(category, "");
+            } catch (err) {
+                console.error(err);
+                alert('❌ ' + err.message);
+            }
         },
 
         getMenuLabel() {
