@@ -97,193 +97,40 @@
         <div class="lg:col-span-8 flex flex-col gap-10">
 
           <!-- TAB 1: GIỚI THIỆU - "CÂU CHUYỆN CỦA CHÚNG TÔI" (Mặc định mở để hiển thị ảnh mẫu mới) -->
-          <div  class="space-y-10">
-            <section class="bg-white rounded-[24px] p-8 md:p-10 shadow-xl transition-all duration-300 text-slate-800">
-              
-              <!-- Câu chuyện của chúng tôi -->
-              <div class="space-y-6">
-                <h2 class="text-[25px] font-extrabold text-brand-orange tracking-tight">
-                  Câu Chuyện Của Chúng Tôi
-                </h2>
+          <div class="space-y-6" v-if="article">
 
-                <p class="text-[#374151] text-[14.5px] leading-[1.8] text-justify font-normal">
-                  <strong class="text-indigo-950 font-bold">LE VIET NAM</strong> được thành lập với tâm huyết trở thành cầu nối vững chắc, đưa các nhà đầu tư quốc tế đến với thị trường Việt Nam đầy tiềm năng, đồng thời hỗ trợ các doanh nghiệp trong nước xây dựng nền móng pháp lý vững chắc.
-                </p>
+  <h2
+    class="text-[25px] font-extrabold text-brand-orange tracking-tight"
+  >
+    {{ article.title }}
+  </h2>
 
-                <p class="text-[#374151] text-[14.5px] leading-[1.8] text-justify font-normal">
-                  Chúng tôi hiểu rằng, rào cản về thủ tục hành chính, pháp lý và sự khác biệt văn hóa luôn là những thách thức lớn đối với doanh nghiệp. Với đội ngũ chuyên gia, luật sư và cố vấn giàu kinh nghiệm, LE VIET NAM cam kết mang đến những giải pháp tư vấn toàn diện, chính xác và hiệu quả nhất.
-                </p>
-              </div>
+  <!-- ảnh -->
+  <img
+    v-if="article.img"
+    :src="article.img"
+    :alt="article.title"
+    class="w-full rounded-2xl object-cover shadow-lg"
+  />
 
-              <!-- Hai khối Tầm Nhìn & Sứ Mệnh -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-9">
-                
-                <!-- Khối Tầm Nhìn -->
-                <div class="bg-slate-50/70 p-6 rounded-[16px] border border-slate-100 space-y-3 flex flex-col justify-start">
-                  <div class="flex items-center gap-2 text-brand-orange font-bold text-[16px]">
-                    <i class="fa-solid fa-earth-americas text-lg"></i>
-                    <span>Tầm Nhìn</span>
-                  </div>
-                  <p class="text-[#4b5563] text-[13px] md:text-[13.5px] leading-[1.7] text-justify">
-                    Trở thành đơn vị tư vấn chiến lược và cung cấp dịch vụ pháp lý hàng đầu tại Việt Nam, là điểm đến đầu tiên mà các nhà đầu tư quốc tế nghĩ tới khi quyết định thâm nhập thị trường Việt Nam.
-                  </p>
-                </div>
+  <!-- mô tả ngắn -->
+  <p
+    v-if="article.desc"
+    class="text-[#374151] text-[14.5px] leading-[1.8] text-justify font-normal"
+  >
+    {{ article.desc }}
+  </p>
 
-                <!-- Khối Sứ Mệnh -->
-                <div class="bg-slate-50/70 p-6 rounded-[16px] border border-slate-100 space-y-3 flex flex-col justify-start">
-                  <div class="flex items-center gap-2 text-brand-orange font-bold text-[16px]">
-                    <i class="fa-regular fa-circle-check text-lg"></i>
-                    <span>Sứ Mệnh</span>
-                  </div>
-                  <p class="text-[#4b5563] text-[13px] md:text-[13.5px] leading-[1.7] text-justify">
-                    Đơn giản hóa mọi thủ tục pháp lý phức tạp, tối ưu hóa thời gian và chi phí cho khách hàng. Nâng tầm năng lực nhân sự Việt thông qua các chương trình đào tạo chuẩn quốc tế.
-                  </p>
-                </div>
+  <!-- nội dung html -->
+  <div
+    v-if="article.content_vi"
+    class="article-content text-[#374151] text-[14.5px] leading-[1.9]"
+    v-html="article.content_vi"
+  ></div>
 
-              </div>
-
-              <!-- Đường ngăn cách trang nhã -->
-              <div class="border-t border-slate-100 my-10"></div>
-
-              <!-- Phần Giá Trị Cốt Lõi -->
-              <div class="space-y-8">
-                <h2 class="text-[21px] font-extrabold text-brand-orange tracking-tight">
-                  Giá Trị Cốt Lõi
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                  
-                  <!-- Giá trị 1 -->
-                  <div class="space-y-3">
-                    <div class="w-12 h-12 bg-orange-50 text-brand-orange rounded-full flex items-center justify-center font-bold text-base mx-auto shadow-sm">
-                      01
-                    </div>
-                    <h3 class="text-[#1d2454] font-extrabold text-[15px]">
-                      Chuyên Nghiệp
-                    </h3>
-                    <p class="text-[#6b7280] text-[12.5px] leading-[1.6]">
-                      Am hiểu luật pháp, xử lý hồ sơ nhanh chóng, chính xác.
-                    </p>
-                  </div>
-
-                  <!-- Giá trị 2 -->
-                  <div class="space-y-3">
-                    <div class="w-12 h-12 bg-orange-50 text-brand-orange rounded-full flex items-center justify-center font-bold text-base mx-auto shadow-sm">
-                      02
-                    </div>
-                    <h3 class="text-[#1d2454] font-extrabold text-[15px]">
-                      Tận Tâm
-                    </h3>
-                    <p class="text-[#6b7280] text-[12.5px] leading-[1.6]">
-                      Luôn đặt lợi ích của khách hàng lên hàng đầu, đồng hành trọn đời.
-                    </p>
-                  </div>
-
-                  <!-- Giá trị 3 -->
-                  <div class="space-y-3">
-                    <div class="w-12 h-12 bg-orange-50 text-brand-orange rounded-full flex items-center justify-center font-bold text-base mx-auto shadow-sm">
-                      03
-                    </div>
-                    <h3 class="text-[#1d2454] font-extrabold text-[15px]">
-                      Bảo Mật
-                    </h3>
-                    <p class="text-[#6b7280] text-[12.5px] leading-[1.6]">
-                      Cam kết bảo mật tuyệt đối mọi thông tin của doanh nghiệp và đối tác.
-                    </p>
-                  </div>
-
-                </div>
-              </div>
-
-            </section>
-          </div>
-
-          <!-- TAB 2: TRANG CHỦ (Về LE VIET NAM + Dịch Vụ Nổi Bật) -->
-          <div v-if="activeTab === 'home'" class="space-y-10">
-
-            <!-- GIỚI THIỆU SƠ LƯỢC -->
-            <section class="bg-white rounded-[24px] p-8 md:p-10 shadow-xl text-slate-800 transition-all duration-300">
-              <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                
-                <!-- TEXT -->
-                <div class="md:col-span-7 space-y-5">
-                  <div class="flex items-center space-x-3.5">
-                    <div class="w-[3px] h-[28px] bg-brand-orange"></div>
-                    <h2 class="m-0 text-[24px] font-extrabold text-[#1d2454] tracking-tight">
-                      Về LE VIET NAM
-                    </h2>
-                  </div>
-
-                  <p class="text-[#4b5563] text-[14px] md:text-[14.5px] leading-[1.9] text-justify font-normal">
-                    <strong class="text-[#1d2454] font-bold">LE VIET NAM</strong> tự hào là đơn vị tư vấn chiến lược hàng đầu, chuyên cung cấp các giải pháp toàn diện về tư vấn xúc tiến đầu tư và hỗ trợ thành lập doanh nghiệp trong nước cũng như quốc tế (FDI).
-                  </p>
-
-                  <p class="text-[#4b5563] text-[14px] md:text-[14.5px] leading-[1.9] mt-4 text-justify font-normal">
-                    Với đội ngũ chuyên gia giàu kinh nghiệm, chúng tôi cam kết đồng hành cùng doanh nghiệp từ những bước đầu tiên, giải quyết mọi thủ tục pháp lý phức tạp và nâng cao năng lực nhân sự, giúp doanh nghiệp phát triển bền vững tại thị trường Việt Nam.
-                  </p>
-
-                  <div class="pt-2">
-                    <button @click="handleMenuClick('about')" class="text-brand-orange text-[14px] font-bold bg-none border-none p-0 cursor-pointer transition hover:text-orange-600 flex items-center gap-1">
-                      Xem chi tiết <span class="text-[11px] font-extrabold">&gt;</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- IMAGE -->
-                <div class="md:col-span-5">
-                  <div class="rounded-2xl overflow-hidden shadow-md">
-                    <img
-                      src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=800"
-                      class="w-full h-52 md:h-60 object-cover"
-                      onerror="this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800'"
-                      alt="LE VIET NAM đập tay hợp tác thành công"
-                    />
-                  </div>
-                </div>
-
-              </div>
-            </section>
-
-            <!-- DỊCH VỤ NỔI BẬT -->
-            <section class="space-y-6">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3.5">
-                  <div class="w-[3px] h-[28px] bg-brand-orange"></div>
-                  <h2 class="text-[24px] font-extrabold text-white tracking-tight">
-                    Dịch Vụ Nổi Bật
-                  </h2>
-                </div>
-                <button class="text-[#94a3b8] font-bold text-xs bg-none border-none cursor-pointer transition hover:text-white flex items-center gap-1">
-                  Xem tất cả <span class="text-[10px]">&gt;</span>
-                </button>
-              </div>
-
-              <!-- GRID DỊCH VỤ -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div
-                  v-for="service in featuredServices"
-                  :key="service.id"
-                  class="bg-white rounded-3xl overflow-hidden shadow-lg transition duration-300 hover:-translate-y-1"
-                >
-                  <div class="h-44 overflow-hidden">
-                    <img :src="service.image" class="w-full h-full object-cover" :alt="service.title" />
-                  </div>
-                  <div class="p-6">
-                    <div class="flex items-center gap-2.5 mb-3.5">
-                      <i :class="[service.icon, 'text-brand-orange text-lg']"></i>
-                      <h3 class="text-[#1d2454] text-[16px] font-extrabold m-0 leading-tight">
-                        {{ service.title }}
-                      </h3>
-                    </div>
-                    <p class="text-[#6b7280] text-[13px] leading-[1.8] font-normal">
-                      {{ service.desc }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-          </div>
+</div>
+        
+   
 
         </div>
 
@@ -415,7 +262,7 @@ export default {
       currentLang: this.lang,
 
       currentLangCode: 'VI',
-
+article: null,
 
     menuItems: [
             {
@@ -508,6 +355,23 @@ export default {
   },
 
   methods: {
+    async fetchArticle() {
+  try {
+    const res = await axios.post(
+      'http://localhost:3000/quantri/baiviet',
+      {
+        idFun: 115,
+        slug: 've-le-viet-nam',
+      }
+    )
+
+    if (res.data.success) {
+      this.article = res.data.data
+    }
+  } catch (error) {
+    console.log('Fetch article error:', error)
+  }
+},
     async fetchMenuData() {
       try {
         this.loading = true
@@ -620,9 +484,9 @@ export default {
   },
 
   mounted() {
-    this.fetchMenuData()
-
-    this.initLanguageCode()
+     this.fetchMenuData()
+  this.fetchArticle()
+  this.initLanguageCode()
   },
 }
 </script>
