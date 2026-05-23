@@ -202,7 +202,7 @@
                     " class="space-y-6">
                         <!-- Editor View -->
                          
-                        <ArticleEditor v-if="showEditor" :article="editingArticle" :title="editingTitle" @back="showEditor = false" @save="saveArticle" />
+                        <ArticleEditor v-if="showEditor" :article="editingArticle" :title="editingTitle" :category="getCategoryFromMenu()" @back="showEditor = false" @save="saveArticle" />
 
                         <!-- List View -->
                         <template v-else>
@@ -288,6 +288,14 @@
                             </div>
                         </template>
                     </div>
+
+                    <!-- MENU MANAGER -->
+<div v-if="activeMenu === 'menus'" class="space-y-6 animate-in fade-in">
+   <QuanTriMenu> </QuanTriMenu>
+</div>
+  <div v-if="activeMenu === 'settings'" class="space-y-6 animate-in fade-in">
+                        <CaiDatChung />
+                    </div>
                 </main>
             </div>
         </template>
@@ -322,6 +330,8 @@ import {
 } from "lucide-vue-next";
 import Contact from "./QuanTri/contact.vue";
 import ArticleEditor from "./QuanTri/ArticleEditor.vue";
+import QuanTriMenu from "./QuanTri/QuanTriMenu.vue";
+import CaiDatChung from "./QuanTri/CaiDatChung.vue";
 
 export default {
     name: "AdminApp",
@@ -329,6 +339,8 @@ export default {
     components: {
         Contact,
         ArticleEditor,
+        QuanTriMenu,
+        CaiDatChung,
         LayoutDashboard,
         Settings,
         FileText,
@@ -387,54 +399,13 @@ export default {
                 { id: "menus", label: "Cấu trúc Menu", icon: "MenuIcon" },
                 { id: "settings", label: "Cài đặt chung", icon: "Settings" },
             ],
+langs: [
+    { value: "vi", label: "🇻🇳 Tiếng Việt" },
+    { value: "en", label: "🇬🇧 English" },
+    { value: "ja", label: "🇯🇵 日本語" },
+],
 
-    
-            MOCK_MENU: [
-                {
-                    id: 1,
-                    name: {
-                        vi: "Trang chủ",
-                        en: "Home",
-                        ja: "ホーム",
-                    },
-                    children: [],
-                },
-                {
-                    id: 2,
-                    name: {
-                        vi: "Dịch vụ",
-                        en: "Services",
-                        ja: "サービス",
-                    },
-                    children: [
-                        {
-                            id: 21,
-                            name: {
-                                vi: "Hỗ trợ xúc tiến đầu tư",
-                                en: "Investment Promotion",
-                                ja: "投資促進サポート",
-                            },
-                        },
-                        {
-                            id: 22,
-                            name: {
-                                vi: "Thành lập doanh nghiệp",
-                                en: "Enterprise Establishment",
-                                ja: "企業設立",
-                            },
-                        },
-                    ],
-                },
-                {
-                    id: 3,
-                    name: {
-                        vi: "Đào tạo",
-                        en: "Training",
-                        ja: "トレーニング",
-                    },
-                    children: [],
-                },
-            ],
+
 
             articles: [],
         };
@@ -454,17 +425,41 @@ export default {
     },
 
     mounted() {
+        this.loadLoginInfo();
         this.fetchArticles();
     },
 
     methods: {
         login() {
-
+            const email = document.querySelector('input[type="text"]')?.value || 'admin@levietnam.com.vn';
+            const password = document.querySelector('input[type="password"]')?.value || 'admin123';
+            
             this.isAuthenticated = true;
+            this.saveLoginInfo(email, password);
         },
 
         logout() {
             this.isAuthenticated = false;
+            this.clearLoginInfo();
+        },
+
+        saveLoginInfo(email, password) {
+            localStorage.setItem('adminEmail', email);
+            localStorage.setItem('adminPassword', password);
+            localStorage.setItem('isAdminLogged', 'true');
+        },
+
+        clearLoginInfo() {
+            localStorage.removeItem('adminEmail');
+            localStorage.removeItem('adminPassword');
+            localStorage.removeItem('isAdminLogged');
+        },
+
+        loadLoginInfo() {
+            const isLogged = localStorage.getItem('isAdminLogged') === 'true';
+            if (isLogged) {
+                this.isAuthenticated = true;
+            }
         },
 
         setMenu(menu) {
@@ -476,6 +471,7 @@ export default {
             
             
         },
+
 
 
         async fetchArticles(cate = "service", title = "Tin tức") {
@@ -545,16 +541,12 @@ export default {
                             },
 
                     views: item.views ?? 0,
-
                     status: item.status ?? "draft",
-
                     date: item.created_at ?? item.created_at ?? "",
-
-                    img:
-                        item.img ??
-                        item.thumbnail ??
-                        "https://images.unsplash.com/photo-1497366216548-37526070297c?w=100&q=80&auto=format&fit=crop",
+                    
+                    img: item.thumbnail?.startsWith('https') ? item.thumbnail : "http://localhost:3000" + item.thumbnail 
                 }));
+                console.log("Fetched articles:", this.articles);
 
                 this.currentPage = 1;
             } catch (err) {
@@ -608,6 +600,9 @@ export default {
             this.editingArticle = null;
             this.editingTitle = this.getMenuLabel();
             this.showEditor = true;
+                        const category = this.getCategoryFromMenu();
+                        console.log("Adding new article for category:", category);
+
         },
 
         editArticle(article) {

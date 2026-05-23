@@ -6,7 +6,7 @@
 
             <div class="flex items-center gap-3">
 
-                 <button @click="$emit('back')"
+                <button @click="$emit('back')"
                     class="text-gray-500 hover:text-gray-800 transition-colors bg-white p-2 rounded-lg border shadow-sm">
                     <ChevronRight class="rotate-180" :size="20" />
                 </button>
@@ -39,23 +39,23 @@
 
                         <button @click="activeLang = 'vi'"
                             class="px-4 py-2 font-medium text-sm border-b-2 transition-colors" :class="activeLang === 'vi'
-                                    ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-500'
+                                ? 'border-blue-600 text-blue-600'
+                                : 'border-transparent text-gray-500'
                                 ">
                             🇻🇳 Tiếng Việt
                         </button>
 
                         <button @click="activeLang = 'en'"
                             class="px-4 py-2 font-medium text-sm border-b-2 transition-colors" :class="activeLang === 'en'
-                                    ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-500'
+                                ? 'border-blue-600 text-blue-600'
+                                : 'border-transparent text-gray-500'
                                 ">
                             🇬🇧 English
                         </button>
                         <button @click="activeLang = 'jp'"
                             class="px-4 py-2 font-medium text-sm border-b-2 transition-colors" :class="activeLang === 'jp'
-                                    ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-500'
+                                ? 'border-blue-600 text-blue-600'
+                                : 'border-transparent text-gray-500'
                                 ">
                             🇯🇵 日本語
                         </button>
@@ -65,7 +65,7 @@
                         <!-- TITLE -->
                         <div>
 
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1" style="text-align: left;">
                                 Tiêu đề ({{ activeLang.toUpperCase() }})
                             </label>
 
@@ -78,7 +78,7 @@
                         <!-- DESC -->
                         <div>
 
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1" style="text-align: left;">
                                 Mô tả ngắn ({{ activeLang.toUpperCase() }})
                             </label>
 
@@ -93,7 +93,7 @@
 
                             <div class="flex justify-between items-center mb-2">
 
-                                <label class="block text-sm font-semibold text-gray-700">
+                                <label class="block text-sm font-semibold text-gray-700" style="text-align: left;">
                                     Nội dung chi tiết ({{ activeLang.toUpperCase() }})
                                 </label>
 
@@ -102,8 +102,8 @@
                                     <button @click="editorMode = 'visual'"
                                         class="px-3 py-1 text-xs font-medium rounded-md flex items-center gap-1 transition-all"
                                         :class="editorMode === 'visual'
-                                                ? 'bg-white shadow text-blue-600'
-                                                : 'text-gray-500'
+                                            ? 'bg-white shadow text-blue-600'
+                                            : 'text-gray-500'
                                             ">
                                         <Eye :size="14" />
                                         Soạn thảo
@@ -112,8 +112,8 @@
                                     <button @click="editorMode = 'html'"
                                         class="px-3 py-1 text-xs font-medium rounded-md flex items-center gap-1 transition-all"
                                         :class="editorMode === 'html'
-                                                ? 'bg-white shadow text-blue-600'
-                                                : 'text-gray-500'
+                                            ? 'bg-white shadow text-blue-600'
+                                            : 'text-gray-500'
                                             ">
                                         <Code :size="14" />
                                         HTML
@@ -121,11 +121,10 @@
                                 </div>
                             </div>
                             <!-- EDITOR -->
-                            <div class="border rounded-lg overflow-hidden transition-colors" :class="editorMode === 'html'
+                            <!-- <div class="border rounded-lg overflow-hidden transition-colors" :class="editorMode === 'html'
                                     ? 'border-gray-800'
                                     : 'border-gray-300'
                                 ">
-                                <!-- TOOLBAR -->
                                 <div v-if="editorMode === 'visual'"
                                     class="bg-gray-50 border-b border-gray-300 p-2 flex gap-2">
                                     <button class="px-2.5 py-1.5 bg-white border rounded shadow-sm text-sm font-bold">
@@ -151,6 +150,21 @@
                                             ? '<div>Nội dung html...</div>'
                                             : 'Bắt đầu viết nội dung...'
                                         "></textarea>
+                                
+                            </div> -->
+                            <div class="border rounded-lg overflow-hidden transition-colors" :class="editorMode === 'html'
+                                ? 'border-gray-800'
+                                : 'border-gray-300'">
+
+                                <!-- HTML MODE -->
+                                <textarea v-if="editorMode === 'html'" v-model="form.content[activeLang]"
+                                    class="w-full p-4 h-[500px] outline-none text-sm bg-[#1e1e1e] text-[#d4d4d4] font-mono leading-relaxed"
+                                    placeholder="<div>Nội dung html...</div>"></textarea>
+
+                                <!-- VISUAL MODE -->
+                                <div v-show="editorMode === 'visual'">
+                                    <textarea id="editor1"></textarea>
+                                </div>
 
                             </div>
 
@@ -176,7 +190,7 @@
                         <!-- CATEGORY -->
                         <div>
 
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                            <label class="block text-sm font-medium text-gray-700 mb-1" style="text-align: left;">
                                 Danh mục
                             </label>
 
@@ -192,7 +206,7 @@
                         <!-- STATUS -->
                         <div>
 
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                            <label class="block text-sm font-medium text-gray-700 mb-1" style="text-align: left;">
                                 Trạng thái
                             </label>
 
@@ -213,7 +227,7 @@
                         <!-- DATE -->
                         <div>
 
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                            <label class="block text-sm font-medium text-gray-700 mb-1" style="text-align: left;">
                                 Ngày đăng
                             </label>
 
@@ -258,7 +272,7 @@
 </template>
 
 <script>
-import {   Save,   Eye,   Code,   Image as ImageIcon,  ChevronRight} from 'lucide-vue-next'
+import { Save, Eye, Code, Image as ImageIcon, ChevronRight } from 'lucide-vue-next'
 
 export default {
     name: 'ArticleEditor',
@@ -267,9 +281,9 @@ export default {
         Eye,
         Code,
         ImageIcon,
-        ChevronRight
+        ChevronRight,
     },
-      props: {
+    props: {
         article: {
             type: Object,
             default: null
@@ -278,19 +292,21 @@ export default {
             type: String,
             default: 'Bài viết'
         },
-            category: {
+        category: {
             type: String,
-            default: 'service'
+            default: ''
         }
     },
- emits: ['back', 'save'],
+    emits: ['back', 'save'],
     data() {
         return {
+            ckEditor: null,
             view: 'edit',
             activeLang: 'vi',
             editorMode: 'visual',
             loadingSubmit: false,
             thumbnailBase64: '',
+
             form: {
                 cate: '',
                 title: {
@@ -316,26 +332,36 @@ export default {
             }
         }
     },
-        mounted() {
+    mounted() {
         // Gán category từ prop khi component mount
         this.form.cate = this.category
         console.log("this.form.cate ", this.form.cate);
-        
+        this.$nextTick(() => {
+            this.initCKEditor()
+        })
+
     },
-     watch: {
+    beforeUnmount() {
+
+        if (this.ckEditor) {
+            this.ckEditor.destroy()
+        }
+
+    },
+    watch: {
         article: {
             handler(newArticle) {
                 if (newArticle) {
                     this.loadArticleData(newArticle)
-                   } else {
+                } else {
                     // Reset form khi tạo bài viết mới
                     this.form.cate = this.category
                 }
-           
+
             },
             immediate: true
         },
-          category: {
+        category: {
             handler(newCategory) {
                 // Update category khi menu thay đổi
                 console.log("Category prop received:", this.category);
@@ -347,12 +373,23 @@ export default {
                 }
             },
             immediate: true  // Gọi ngay khi component khởi tạo
+        },
+        activeLang() {
+            this.updateEditorContent()
+        },
+
+        editorMode(newMode) {
+            if (newMode === 'visual') {
+                this.$nextTick(() => {
+                    this.initCKEditor()
+                })
+            }
         }
     },
     methods: {
-         loadArticleData(article) {
+        loadArticleData(article) {
             if (!article) return
-            
+
             this.form = {
                 cate: article.cate || 'service',
                 title: article.title || {
@@ -365,6 +402,7 @@ export default {
                     en: '',
                     jp: ''
                 },
+
                 content: article.content || {
                     vi: '',
                     en: '',
@@ -376,13 +414,13 @@ export default {
                 publish_date: article.publish_date || article.date || '',
                 slug: article.slug || ''
             }
-            
+
             // Set thumbnail preview
             if (article.img || article.thumbnail) {
                 this.thumbnailBase64 = article.img || article.thumbnail
             }
         },
-        
+
         // IMAGE -> BASE64
         handleImageUpload(event) {
             const file = event.target.files[0]
@@ -407,13 +445,115 @@ export default {
             // .replace(/\-\-+/g, '-')
         },
 
+        initCKEditor() {
+
+            // destroy editor cũ
+            if (this.ckEditor) {
+                this.ckEditor.destroy()
+                this.ckEditor = null
+            }
+
+            // kiểm tra tồn tại
+            const editorEl = document.getElementById('editor1')
+
+            if (!editorEl) return
+
+            this.ckEditor = window.CKEDITOR.replace('editor1', {
+
+                height: 500,
+
+                removePlugins: 'elementspath',
+
+                resize_enabled: false,
+
+                toolbar: [
+                    {
+                        name: 'clipboard',
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'styles',
+                        items: ['Format']
+                    },
+                    {
+                        name: 'basicstyles',
+                        items: [
+                            'Bold',
+                            'Italic',
+                            'Underline',
+                            'Strike'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        items: [
+                            'NumberedList',
+                            'BulletedList',
+                            '-',
+                            'Outdent',
+                            'Indent',
+                            '-',
+                            'Blockquote'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: [
+                            'Image',
+                            'Table',
+                            'HorizontalRule'
+                        ]
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'document',
+                        items: ['Source']
+                    }
+                ]
+            })
+
+            // set data
+            this.ckEditor.setData(
+                this.form.content[this.activeLang] || ''
+            )
+
+            // sync realtime
+            this.ckEditor.on('change', () => {
+
+                this.form.content[this.activeLang] =
+                    this.ckEditor.getData()
+
+            })
+        },
+
+        updateEditorContent() {
+
+            if (
+                this.ckEditor &&
+                this.editorMode === 'visual'
+            ) {
+
+                this.ckEditor.setData(
+                    this.form.content[this.activeLang] || ''
+                )
+
+            }
+
+        },
 
 
         // SUBMIT
         async submitArticle() {
             try {
                 this.loadingSubmit = true
-                          
+
                 // VALIDATION - Check rỗng
                 if (!this.form.title.vi.trim()) {
                     alert('❌ Vui lòng nhập tiêu đề Tiếng Việt')
@@ -435,8 +575,8 @@ export default {
                 //     this.loadingSubmit = false
                 //     return
                 // }
-                
-            // AUTO SLUG
+
+                // AUTO SLUG
                 this.form.slug = this.slugify(
                     this.form.title.vi
                 )
@@ -489,7 +629,7 @@ export default {
                 alert('Đăng bài thành công')
                 // RESET
                 this.resetForm();
-                     this.$emit('back');
+                this.$emit('back');
 
             } catch (err) {
                 console.log(err)

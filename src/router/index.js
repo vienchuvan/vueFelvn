@@ -1,5 +1,5 @@
 import QuanTri from '@/views/QuanTri.vue'
-import TrangChu from '@/views/TrangChu.vue'
+import TrangChu from '@/views/Home/TrangChu.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
