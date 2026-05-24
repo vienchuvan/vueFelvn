@@ -158,7 +158,7 @@
                     <div class="space-y-5">
 
                         <!-- CATEGORY -->
-                        <div>
+                        <!-- <div>
 
                             <label class="block text-sm font-medium text-gray-700 mb-1" style="text-align: left;">
                                 Danh mục
@@ -171,7 +171,7 @@
                                 <option value="training">Đào tạo</option>
                             </select>
 
-                        </div>
+                        </div> -->
 
                         <!-- STATUS -->
                         <div>

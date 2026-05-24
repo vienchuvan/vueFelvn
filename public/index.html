@@ -1,45 +1,168 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="vi">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-     <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/ckeditor/ckeditor.js?v=<?=time()?>"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2 family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
-  <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            navy: '#0f172a',
-                            bgBlue: '#0c3a66',
-                            darkBlue: '#052344',
-                            orange: '#f46a06',
-                            grayText: '#4b5563',
-                        }
-                    }
-                }
-            }
-        }
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0"
+    />
+
+    <!-- SEO -->
+    <title>
+      LE VIET NAM - Tư Vấn Đầu Tư, Pháp Lý & Thành Lập Doanh Nghiệp FDI
+    </title>
+
+    <meta
+      name="description"
+      content="LE VIET NAM chuyên tư vấn đầu tư nước ngoài, thành lập doanh nghiệp FDI, dịch vụ pháp lý và đào tạo nhân sự chuẩn quốc tế tại Việt Nam."
+    />
+
+    <meta
+      name="keywords"
+      content="LE VIET NAM, tư vấn đầu tư, thành lập công ty FDI, tư vấn pháp lý doanh nghiệp, giấy phép lao động, đầu tư nước ngoài tại Việt Nam, luật doanh nghiệp"
+    />
+
+    <meta name="author" content="LE VIET NAM" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Vietnamese" />
+    <meta name="theme-color" content="#0c3a66" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://levietnam.vn/" />
+
+    <!-- Open Graph SEO -->
+    <meta
+      property="og:title"
+      content="LE VIET NAM - Tư Vấn Đầu Tư & Pháp Lý Hàng Đầu Việt Nam"
+    />
+
+    <meta
+      property="og:description"
+      content="Đồng hành cùng doanh nghiệp và nhà đầu tư quốc tế với các giải pháp pháp lý, đầu tư và đào tạo chuyên nghiệp tại Việt Nam."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://levietnam.vn/" />
+    <meta
+      property="og:image"
+      content="https://levietnam.vn/seo-banner.jpg"
+    />
+
+    <meta property="og:site_name" content="LE VIET NAM" />
+    <meta property="og:locale" content="vi_VN" />
+
+    <!-- Twitter SEO -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta
+      name="twitter:title"
+      content="LE VIET NAM - Tư Vấn Đầu Tư & Pháp Lý"
+    />
+
+    <meta
+      name="twitter:description"
+      content="Giải pháp tư vấn pháp lý, đầu tư FDI và đào tạo doanh nghiệp chuyên nghiệp tại Việt Nam."
+    />
+
+    <meta
+      name="twitter:image"
+      content="https://levietnam.vn/seo-banner.jpg"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CKEditor -->
+    <script src="/ckeditor/ckeditor.js"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Structured Data SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "LE VIET NAM",
+        "url": "https://levietnam.vn",
+        "logo": "https://levietnam.vn/logo.png",
+        "description": "LE VIET NAM chuyên tư vấn đầu tư nước ngoài, pháp lý doanh nghiệp và đào tạo nhân sự tại Việt Nam.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "VN"
+        },
+        "sameAs": [
+          "https://facebook.com/levietnam",
+          "https://linkedin.com/company/levietnam"
+        ]
+      }
     </script>
+  </head>
+
+  <body class="font-sans bg-white text-gray-800">
+    <noscript>
+      <strong>
+        We're sorry but
+        <%= htmlWebpackPlugin.options.title %>
+        doesn't work properly without JavaScript enabled.
+        Please enable it to continue.
+      </strong>
+    </noscript>
+
+    <div id="app"></div>
+
+    <!-- built files will be auto injected -->
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "Inter",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                '"Segoe UI"',
+                "Roboto",
+                "Helvetica",
+                "Arial",
+                "sans-serif",
+              ],
+            },
+
+            colors: {
+              brand: {
+                navy: "#0f172a",
+                bgBlue: "#0c3a66",
+                darkBlue: "#052344",
+                orange: "#f46a06",
+                grayText: "#4b5563",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </body>
 </html>
