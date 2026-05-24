@@ -130,7 +130,7 @@
     </main>
 
   </div>
-  
+   <FooterWeb />
 </template>
 
 <script>
@@ -140,13 +140,14 @@ import "aos/dist/aos.css";
 
 import RightMenu from "./RightMenu.vue";
 import TopNav from "./TopNav.vue";
-
+import FooterWeb from "@/views/Home/FooterWeb.vue";
 export default {
-  name: "BaiVietChiTiet",
+  name: "BaiVietChiTietTheoMenu",
 
   components: {
     TopNav,
     RightMenu,
+    FooterWeb,
   },
 
   props: {

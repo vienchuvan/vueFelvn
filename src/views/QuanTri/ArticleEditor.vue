@@ -21,7 +21,8 @@
                 class="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 shadow-lg shadow-blue-500/30 transition-colors">
                 <Save :size="18" />
 
-                {{ loadingSubmit ? 'Đang đăng...' : 'Đăng bài' }}
+                {{ isEditMode ? (loadingSubmit ? 'Đang cập nhật...' : 'Cập nhật') : (loadingSubmit ? 'Đang đăng...' :
+                    'Đăng bài') }}
             </button>
 
         </div>
@@ -120,38 +121,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- EDITOR -->
-                            <!-- <div class="border rounded-lg overflow-hidden transition-colors" :class="editorMode === 'html'
-                                    ? 'border-gray-800'
-                                    : 'border-gray-300'
-                                ">
-                                <div v-if="editorMode === 'visual'"
-                                    class="bg-gray-50 border-b border-gray-300 p-2 flex gap-2">
-                                    <button class="px-2.5 py-1.5 bg-white border rounded shadow-sm text-sm font-bold">
-                                        B
-                                    </button>
-                                    <button class="px-2.5 py-1.5 bg-white border rounded shadow-sm text-sm italic">
-                                        I
-                                    </button>
-                                    <button class="px-2.5 py-1.5 bg-white border rounded shadow-sm text-sm underline">
-                                        U
-                                    </button>
-                                    <button class="px-2.5 py-1.5 bg-white border rounded shadow-sm text-sm">
-                                        <ImageIcon :size="16" />
-                                    </button>
 
-                                </div>
-
-                                <textarea v-model="form.content[activeLang]"
-                                    class="w-full p-4 h-[400px] outline-none text-sm transition-colors" :class="editorMode === 'html'
-                                            ? 'bg-[#1e1e1e] text-[#d4d4d4] font-mono leading-relaxed'
-                                            : 'bg-white text-gray-800'
-                                        " :placeholder="editorMode === 'html'
-                                            ? '<div>Nội dung html...</div>'
-                                            : 'Bắt đầu viết nội dung...'
-                                        "></textarea>
-                                
-                            </div> -->
                             <div class="border rounded-lg overflow-hidden transition-colors" :class="editorMode === 'html'
                                 ? 'border-gray-800'
                                 : 'border-gray-300'">
@@ -332,6 +302,11 @@ export default {
             }
         }
     },
+    computed: {
+        isEditMode() {
+            return !!this.article
+        }
+    },
     mounted() {
         // Gán category từ prop khi component mount
         this.form.cate = this.category
@@ -391,6 +366,7 @@ export default {
             if (!article) return
 
             this.form = {
+                id: article.id || '',
                 cate: article.cate || 'service',
                 title: article.title || {
                     vi: '',
@@ -402,7 +378,6 @@ export default {
                     en: '',
                     jp: ''
                 },
-
                 content: article.content || {
                     vi: '',
                     en: '',
@@ -438,13 +413,18 @@ export default {
                 .toString()
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd')
+                .replace(/Đ/g, 'D')
+                 .replace(/ơ/g, 'o')
+                .replace(/Ơ/g, 'O').replace(/ư/g, 'u')
+                .replace(/Ư/g, 'U')
+
                 .toLowerCase()
                 .trim()
+                .replace(/[^a-z0-9\s-]/g, '')
                 .replace(/\s+/g, '-')
-            // .replace(/[^\w\-]+/g, '')
-            // .replace(/\-\-+/g, '-')
+                .replace(/--+/g, '-')
         },
-
         initCKEditor() {
 
             // destroy editor cũ
@@ -550,36 +530,31 @@ export default {
 
 
         // SUBMIT
+        // SUBMIT
         async submitArticle() {
             try {
+
                 this.loadingSubmit = true
 
-                // VALIDATION - Check rỗng
+                // VALIDATION
                 if (!this.form.title.vi.trim()) {
                     alert('❌ Vui lòng nhập tiêu đề Tiếng Việt')
-                    this.loadingSubmit = false
                     return
                 }
+
                 if (!this.form.desc.vi.trim()) {
                     alert('❌ Vui lòng nhập mô tả Tiếng Việt')
-                    this.loadingSubmit = false
                     return
                 }
+
                 if (!this.form.content.vi.trim()) {
                     alert('❌ Vui lòng nhập nội dung Tiếng Việt')
-                    this.loadingSubmit = false
                     return
                 }
-                // if (!this.form.thumbnail) {
-                //     alert('❌ Vui lòng chọn ảnh đại diện')
-                //     this.loadingSubmit = false
-                //     return
-                // }
 
                 // AUTO SLUG
-                this.form.slug = this.slugify(
-                    this.form.title.vi
-                )
+                this.form.slug = this.slugify(this.form.title.vi)
+
                 // AUTO DATE
                 if (!this.form.publish_date) {
                     this.form.publish_date = new Date()
@@ -587,26 +562,43 @@ export default {
                         .split('T')[0]
                 }
 
-                // BODY
+                // CHECK MODE
+                const isEdit = !!this.article?.id
+
+                // PAYLOAD
                 const payload = {
-                    idFun: 111,
+                    idFun: isEdit ? 112 : 111,
+
+                    // UPDATE cần id
+                    id: this.form.id,
+
                     cate: this.form.cate,
+
                     title_vi: this.form.title.vi,
                     title_en: this.form.title.en,
                     title_jp: this.form.title.jp,
+
                     desc_vi: this.form.desc.vi,
                     desc_en: this.form.desc.en,
                     desc_jp: this.form.desc.jp,
+
                     content_vi: this.form.content.vi,
                     content_en: this.form.content.en,
                     content_jp: this.form.content.jp,
+
                     thumbnail: this.form.thumbnail,
-                    views: 0,
+
+                    views: this.form.views || 0,
+
                     status: this.form.status,
+
                     publish_date: this.form.publish_date,
+
                     slug: this.form.slug
                 }
-                console.log(payload)
+
+                console.log("PAYLOAD:", payload)
+
                 const response = await fetch(
                     'http://localhost:3000/quantri/baiviet',
                     {
@@ -619,24 +611,38 @@ export default {
                 )
 
                 const data = await response.json()
-                console.log(data)
+
+                console.log("RESPONSE:", data)
+
                 if (!response.ok) {
                     throw new Error(
-                        data.message || 'Đăng bài thất bại'
+                        data.message || 'Lưu bài viết thất bại'
                     )
                 }
 
-                alert('Đăng bài thành công')
-                // RESET
-                this.resetForm();
-                this.$emit('back');
+                alert(
+                    isEdit
+                        ? '✅ Cập nhật bài viết thành công'
+                        : '✅ Đăng bài thành công'
+                )
+
+                // RESET khi tạo mới
+                if (!isEdit) {
+                    this.resetForm()
+                }
+
+                this.$emit('back')
 
             } catch (err) {
+
                 console.log(err)
+
                 alert(err.message)
 
             } finally {
+
                 this.loadingSubmit = false
+
             }
         },
 

@@ -6,10 +6,14 @@
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+ font-family: "Be Vietnam Pro", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
+body {
+  font-family: "Be Vietnam Pro", sans-serif;
+}
+
 </style>

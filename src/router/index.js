@@ -18,8 +18,17 @@ const routes = [
     component: QuanTri
   },
     {
-    path: '/chitiet',
-    name: 'chitiet',
+    path: '/bai-viet/:slug',
+    name: 'BaiVietChiTiet',
+    component: ChiTietBaiViet
+  },
+  //  {path: '/gioi-thieu', name: 'GioiThieu', component: () => import('@/views/Home/GioiThieu.vue')},
+  {path: '/dich-vu', name: 'ServicesOverview', component: () => import('@/views/Home/DichVu.vue')},
+    {path: '/tin-tuc', name: 'NewsOverview', component: () => import('@/views/Home/TinTuc.vue')},
+      {path: '/lien-he', name: 'ContactSection', component: () => import('@/views/Home/LienHe.vue')},
+  {
+    path: '/:slug',
+    name: 'BaiVietChiTietTheoMenu',
     component: ChiTietBaiViet
   },
 ]

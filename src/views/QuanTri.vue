@@ -65,8 +65,8 @@
                         <button v-else @click="setMenu(item.id)"
                             class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-medium text-sm"
                             :class="activeMenu === item.id
-                                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
-                                    : 'hover:bg-white/10 hover:text-white'
+                                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
+                                : 'hover:bg-white/10 hover:text-white'
                                 ">
                             <component :is="item.icon" size="18"
                                 :class="activeMenu === item.id ? 'text-white' : 'text-gray-400'" />
@@ -189,9 +189,9 @@
                     </div>
 
                     <!-- CONTACTS -->
-                     <div v-if="activeMenu === 'contacts'" class="space-y-6">
-                     <Contact />
-                     </div>
+                    <div v-if="activeMenu === 'contacts'" class="space-y-6">
+                        <Contact />
+                    </div>
 
                     <!-- ARTICLES -->
                     <div v-if="
@@ -201,8 +201,9 @@
                         activeMenu === 'page_training'
                     " class="space-y-6">
                         <!-- Editor View -->
-                         
-                        <ArticleEditor v-if="showEditor" :article="editingArticle" :title="editingTitle" :category="getCategoryFromMenu()" @back="showEditor = false" @save="saveArticle" />
+
+                        <ArticleEditor v-if="showEditor" :article="editingArticle" :title="editingTitle"
+                            :category="getCategoryFromMenu()" @back="showEditor = false" @save="saveArticle" />
 
                         <!-- List View -->
                         <template v-else>
@@ -216,7 +217,7 @@
                                 </button>
                             </div>
 
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                                 <table class="w-full text-left border-collapse">
                                     <thead>
                                         <tr class="bg-gray-50 text-gray-500 text-sm border-b border-gray-200">
@@ -247,8 +248,8 @@
 
                                             <td class="p-4">
                                                 <span class="px-2.5 py-1 rounded-md text-xs font-bold" :class="news.status === 'published'
-                                                        ? 'bg-green-100 text-green-700'
-                                                        : 'bg-gray-100 text-gray-600'
+                                                    ? 'bg-green-100 text-green-700'
+                                                    : 'bg-gray-100 text-gray-600'
                                                     ">
                                                     {{ news.status === "published" ? "Đã đăng" : "Bản nháp" }}
                                                 </span>
@@ -259,10 +260,12 @@
                                             </td>
 
                                             <td class="p-4 flex justify-end gap-2 items-center h-full">
-                                                <button @click="editArticle(news)" class="p-1.5 text-blue-600 hover:bg-blue-100 rounded border border-transparent hover:border-blue-200 transition-all">
+                                                <button @click="editArticle(news)"
+                                                    class="p-1.5 text-blue-600 hover:bg-blue-100 rounded border border-transparent hover:border-blue-200 transition-all">
                                                     <Edit :size="18" />
                                                 </button>
-                                                <button  @click="deleteArticle(news)" class="p-1.5 text-red-500 hover:bg-red-50 rounded border border-transparent hover:border-red-200 transition-all">
+                                                <button @click="deleteArticle(news)"
+                                                    class="p-1.5 text-red-500 hover:bg-red-50 rounded border border-transparent hover:border-red-200 transition-all">
                                                     <Trash2 :size="18" />
                                                 </button>
                                             </td>
@@ -290,10 +293,10 @@
                     </div>
 
                     <!-- MENU MANAGER -->
-<div v-if="activeMenu === 'menus'" class="space-y-6 animate-in fade-in">
-   <QuanTriMenu> </QuanTriMenu>
-</div>
-  <div v-if="activeMenu === 'settings'" class="space-y-6 animate-in fade-in">
+                    <div v-if="activeMenu === 'menus'" class="space-y-6 animate-in fade-in">
+                        <QuanTriMenu> </QuanTriMenu>
+                    </div>
+                    <div v-if="activeMenu === 'settings'" class="space-y-6 animate-in fade-in">
                         <CaiDatChung />
                     </div>
                 </main>
@@ -399,11 +402,11 @@ export default {
                 { id: "menus", label: "Cấu trúc Menu", icon: "MenuIcon" },
                 { id: "settings", label: "Cài đặt chung", icon: "Settings" },
             ],
-langs: [
-    { value: "vi", label: "🇻🇳 Tiếng Việt" },
-    { value: "en", label: "🇬🇧 English" },
-    { value: "ja", label: "🇯🇵 日本語" },
-],
+            langs: [
+                { value: "vi", label: "🇻🇳 Tiếng Việt" },
+                { value: "en", label: "🇬🇧 English" },
+                { value: "ja", label: "🇯🇵 日本語" },
+            ],
 
 
 
@@ -433,7 +436,7 @@ langs: [
         login() {
             const email = document.querySelector('input[type="text"]')?.value || 'admin@levietnam.com.vn';
             const password = document.querySelector('input[type="password"]')?.value || 'admin123';
-            
+
             this.isAuthenticated = true;
             this.saveLoginInfo(email, password);
         },
@@ -464,12 +467,12 @@ langs: [
 
         setMenu(menu) {
             this.activeMenu = menu;
-            
+
             const category = this.getCategoryFromMenu();
             this.fetchArticles(category, "")
             console.log("Menu changed to:", menu, "Category:", category);
-            
-            
+
+
         },
 
 
@@ -495,7 +498,7 @@ langs: [
 
                 const data = await response.json();
                 console.log("data", data);
-                
+
 
                 const list = Array.isArray(data) ? data : data.data || data.items || [];
                 this.articles = list.map((item) => ({
@@ -514,7 +517,7 @@ langs: [
                                 jp: "タイトル未定",
                             },
 
-                               desc:
+                    desc:
                         typeof item.desc_vi === "string"
                             ? {
                                 vi: item.desc_vi,
@@ -527,7 +530,7 @@ langs: [
                                 jp: "タイトル未定",
                             },
 
-                               content:
+                    content:
                         typeof item.content_vi === "string"
                             ? {
                                 vi: item.content_vi,
@@ -543,8 +546,15 @@ langs: [
                     views: item.views ?? 0,
                     status: item.status ?? "draft",
                     date: item.created_at ?? item.created_at ?? "",
-                    
-                    img: item.thumbnail?.startsWith('https') ? item.thumbnail : "http://localhost:3000" + item.thumbnail 
+
+               img: item.thumbnail
+    ? (
+        item.thumbnail.startsWith('http://') ||
+        item.thumbnail.startsWith('https://')
+            ? item.thumbnail
+            : 'http://localhost:3000' + item.thumbnail
+    )
+    :  require('@/assets/image.png'),
                 }));
                 console.log("Fetched articles:", this.articles);
 
@@ -600,8 +610,8 @@ langs: [
             this.editingArticle = null;
             this.editingTitle = this.getMenuLabel();
             this.showEditor = true;
-                        const category = this.getCategoryFromMenu();
-                        console.log("Adding new article for category:", category);
+            const category = this.getCategoryFromMenu();
+            console.log("Adding new article for category:", category);
 
         },
 
@@ -610,24 +620,24 @@ langs: [
             this.editingTitle = this.getMenuLabel();
             this.showEditor = true;
         },
-getCategoryFromMenu() {
-    const menuToCategoryMap = {
-        'page_about': 'about',
-        'page_services': 'service',
-        'page_training': 'training',
-        'news': 'news'
-    };
-    return menuToCategoryMap[this.activeMenu] || 'service';
-},
+        getCategoryFromMenu() {
+            const menuToCategoryMap = {
+                'page_about': 'about',
+                'page_services': 'service',
+                'page_training': 'training',
+                'news': 'news'
+            };
+            return menuToCategoryMap[this.activeMenu] || 'service';
+        },
         saveArticle(formData) {
             console.log("Saving:", formData);
             // TODO: Send to API
             this.showEditor = false;
         },
 
-          async deleteArticle(article) {
+        async deleteArticle(article) {
             const confirmed = confirm(`❓ Bạn chắc chắn muốn xóa bài viết:\n"${article.title?.vi || 'Không xác định'}"\n\nHành động này không thể hoàn tác!`);
-            
+
             if (!confirmed) return;
 
             try {
@@ -653,7 +663,7 @@ getCategoryFromMenu() {
 
                 alert('✅ Xóa bài viết thành công');
                 // Refresh danh sách
-                   const category = this.getCategoryFromMenu();
+                const category = this.getCategoryFromMenu();
                 this.fetchArticles(category, "");
             } catch (err) {
                 console.error(err);
