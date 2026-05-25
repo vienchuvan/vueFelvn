@@ -1,130 +1,121 @@
 <template>
-
-  <div class="relative">
+  <div class="sticky top-[90px] z-30">
 
     <div
-      class="sticky z-[60]"
-      :style="{
-        top: navOffset + 'px'
-      }"
+      class="bg-[#0f2a4a]/95 backdrop-blur-md rounded-[18px] border border-indigo-800/50 shadow-2xl overflow-hidden"
     >
 
+      <!-- CATEGORY -->
       <div
-        class="bg-[#09223e] rounded-[18px] border border-white/5 shadow-2xl overflow-hidden"
+        v-for="(section, idx) in sidebarMenu"
+        :key="idx"
+        class="mb-2"
       >
 
-        <!-- CATEGORY -->
+        <!-- TITLE -->
         <div
-          v-for="(category, categoryIndex) in sidebarMenu"
-          :key="categoryIndex"
+          class="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3"
         >
 
-          <!-- TITLE -->
-          <div
-            class="px-6 py-4 flex items-center justify-between border-t border-white/5"
-            style="background: chocolate;"
+          <h3
+            class="text-base font-bold text-white uppercase tracking-wide text-left"
           >
+            {{ getCategoryLabel(section) }}
+          </h3>
 
-            <span
-              class="text-white text-[14px] font-extrabold tracking-wider uppercase"
-            >
-              {{ getCategoryLabel(category) }}
-            </span>
+        </div>
 
-            <i class="fa-solid fa-gears text-white/70"></i>
+        <!-- CONTENT -->
+        <div class="p-2">
 
-          </div>
+          <ul class="space-y-1">
 
-          <!-- CONTENT -->
-          <div class="p-6 space-y-6">
-
-            <!-- ITEM -->
-            <div
-              v-for="(item, itemIndex) in category.items"
-              :key="itemIndex"
-              class="space-y-3.5"
+            <li
+              v-for="(item, itemIdx) in section.items"
+              :key="itemIdx"
             >
 
-              <!-- ITEM TITLE -->
-              <div
-                class="text-white font-bold text-[14px] text-left flex items-start gap-2"
+              <!-- ITEM -->
+              <button
+                class="w-full flex items-start text-left p-2.5 rounded-lg hover:bg-indigo-900/50 transition-colors group"
               >
 
-                <span
-                  class="font-bold"
-                  style="color: chocolate;"
-                >
-                  <i class="fa-solid fa-arrow-right"></i>
-                </span>
+                <i
+                  class="fa-solid fa-chevron-right text-orange-500 text-[12px] mt-1 mr-2 shrink-0 group-hover:text-orange-400"
+                ></i>
 
-                <span>
+                <span
+                  class="text-gray-200 text-sm font-medium flex-1 group-hover:text-white transition-colors"
+                >
                   {{ getItemTitle(item) }}
                 </span>
 
-              </div>
+              </button>
 
-              <!-- SUB ITEMS -->
-              <transition name="fade">
+              <!-- SUB -->
+              <ul
+                v-if="item.subItems && item.subItems.length"
+                class="pl-8 pr-2 py-1 space-y-1 border-l border-indigo-800/30 ml-4 mb-2"
+              >
 
-                <ul
-                  v-show="openedItems.includes(item.id)"
-                  class="list-none p-0 m-0 pl-[18px] space-y-2.5 text-left"
+                <li
+                  v-for="(subItem, subIdx) in item.subItems"
+                  :key="subIdx"
                 >
 
-                  <li
-                    v-for="(sub, subIndex) in item.subItems"
-                    :key="subIndex"
-                    class="text-[#d1d5db] text-[12.5px] leading-relaxed relative pl-3.5"
+                  <button
+                    class="w-full flex items-start text-left py-1.5 px-2 rounded-md hover:bg-indigo-900/50 transition-colors group"
                   >
 
+                    <div
+                      class="w-1 h-1 rounded-full bg-orange-600 mt-2 mr-2 shrink-0 group-hover:bg-orange-400"
+                    ></div>
+
                     <span
-                      class="absolute left-0 top-[8px] w-1 h-1 rounded-full"
-                      style="background: chocolate;"
-                    ></span>
+                      class="text-gray-400 text-xs hover:text-white transition-colors leading-snug"
+                    >
+                      {{ getSubItemTitle(subItem) }}
+                    </span>
 
-                    {{ getSubItemTitle(sub) }}
+                  </button>
 
-                  </li>
+                </li>
 
-                </ul>
+              </ul>
 
-              </transition>
+            </li>
 
-            </div>
-
-          </div>
+          </ul>
 
         </div>
 
-        <!-- CONTACT -->
-        <div
-          class="bg-[#05172b] p-6 text-center border-t border-white/10 space-y-4"
+      </div>
+
+      <!-- CONTACT -->
+      <div
+        class="p-6 bg-[#0a203f]/90 text-center border-t border-indigo-800/50"
+      >
+
+        <p class="text-sm text-gray-400 mb-4">
+          Cần tư vấn ngay?
+        </p>
+
+        <a
+          href="/lien-he"
+          class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
         >
 
-          <p class="text-[#9ca3af] text-[13px] mb-2 font-medium">
-            Cần tư vấn ngay?
-          </p>
+          <i class="fa-solid fa-phone"></i>
 
-          <a
-            href="/lien-he"
-            style="background: chocolate;"
-            class="w-full py-3 px-4 hover:bg-orange-600 text-white font-bold rounded-xl transition duration-300 shadow-md flex items-center justify-center gap-2 text-sm"
-          >
+          Liên hệ chúng tôi
 
-            <i class="fa-solid fa-phone"></i>
-
-            Liên hệ chúng tôi
-
-          </a>
-
-        </div>
+        </a>
 
       </div>
 
     </div>
 
   </div>
-
 </template>
 
 <script>
@@ -154,59 +145,39 @@ export default {
 
       sidebarMenu: [],
 
-      openedItems: [],
-
-      navOffset: 90,
-
     };
 
   },
 
   methods: {
 
-    updateTopOffset() {
-
-      const nav = document.querySelector(".top-nav");
-
-      if (nav) {
-
-        this.navOffset = nav.offsetHeight + 20;
-
-      } else {
-
-        this.navOffset = 90;
-
-      }
-
-    },
-
     getCategoryLabel(category) {
 
-      if (category[`category_${this.lang}`]) {
-        return category[`category_${this.lang}`];
-      }
-
-      return category.category || "";
+      return (
+        category[`category_${this.lang}`] ||
+        category.category ||
+        ""
+      );
 
     },
 
     getItemTitle(item) {
 
-      if (item[`title_${this.lang}`]) {
-        return item[`title_${this.lang}`];
-      }
-
-      return item.title || "";
+      return (
+        item[`title_${this.lang}`] ||
+        item.title ||
+        ""
+      );
 
     },
 
     getSubItemTitle(sub) {
 
-      if (sub[`title_${this.lang}`]) {
-        return sub[`title_${this.lang}`];
-      }
-
-      return sub.title || "";
+      return (
+        sub[`title_${this.lang}`] ||
+        sub.title ||
+        ""
+      );
 
     },
 
@@ -224,14 +195,6 @@ export default {
         if (response.data.success) {
 
           this.sidebarMenu = response.data.data;
-
-          this.openedItems =
-            this.sidebarMenu.flatMap(
-              (category) =>
-                category.items.map(
-                  (item) => item.id
-                )
-            );
 
         }
 
@@ -252,41 +215,10 @@ export default {
 
     this.getSidebarMenu();
 
-    this.$nextTick(() => {
-
-      this.updateTopOffset();
-
-    });
-
-    window.addEventListener(
-      "resize",
-      this.updateTopOffset
-    );
-
-  },
-
-  beforeUnmount() {
-
-    window.removeEventListener(
-      "resize",
-      this.updateTopOffset
-    );
-
   },
 
 };
 </script>
 
 <style scoped>
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
 </style>

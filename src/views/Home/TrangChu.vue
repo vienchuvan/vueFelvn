@@ -13,7 +13,7 @@
     <!-- MAIN -->
     <main class="w-full max-w-[1180px] mx-auto px-5 pt-[110px] pb-10 overflow-visible">
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative overflow-visible items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8  items-start">
         <!-- LEFT -->
         <div class="lg:col-span-8">
 
@@ -287,7 +287,8 @@
         </div>
 
         <!-- RIGHT -->
-        <aside class="lg:col-span-4 relative overflow-visible self-start" data-aos="fade-left">
+    <aside class="lg:col-span-4">
+
           <RightMenu :subServices="subServices" :lang="currentLang" />
         </aside>
 
