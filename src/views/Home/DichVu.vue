@@ -1,5 +1,5 @@
 <template>
-  <div class="services-page">
+  <div class="news-page-bg min-h-screen flex flex-col overflow-hidden" style="font-family:system-ui">
     <!-- TOP NAV -->
     <TopNav
       :activeTab="activeTab"
@@ -9,7 +9,7 @@
     />
 
     <!-- BREADCRUMB -->
-    <section class="relative w-full overflow-hidden border-b border-white/10">
+    <section class="relative w-full overflow-hidden border-b border-white/10" style="font-family:system-ui">
       <!-- GLOW -->
       <div
         class="absolute top-[-120px] left-[-120px] w-[320px] h-[320px] bg-orange-500/20 blur-3xl rounded-full"
@@ -34,7 +34,7 @@
     </section>
 
     <!-- MAIN -->
-    <section class="relative overflow-hidden py-8 md:py-10">
+    <section class="relative overflow-hidden py-8 md:py-10" style="font-family:system-ui">
       <div class="mx-auto max-w-[1180px] px-5">
         <div class="grid grid-cols-1 gap-7 lg:grid-cols-[1fr_300px]">
           <!-- LEFT -->
@@ -215,7 +215,7 @@ export default {
   methods: {
     async fetchArticles(cate = "service") {
       try {
-        const response = await fetch("http://localhost:3000/quantri/baiviet", {
+        const response = await fetch("http://192.168.51.252:3000/quantri/baiviet", {
           method: "POST",
 
           headers: {

@@ -1,6 +1,6 @@
 <template>
   <div class="news-page-bg min-h-screen overflow-hidden">
-
+<!-- GLOW --> <div class="tech-glow-top"></div> <div class="tech-glow-bottom"></div>
     <!-- TOP NAV -->
     <TopNav
       :activeTab="activeTab"
@@ -12,13 +12,11 @@
     <!-- HERO -->
     <section
       class="relative overflow-hidden border-b border-white/10"
-      style="font-family:auto;text-align:left;"
+      style="font-family:system-ui;text-align:left;"
     >
 
       <!-- BG -->
-      <div class="absolute inset-0 opacity-[0.06]">
-        <div class="wave-bg"></div>
-      </div>
+      
 
       <!-- GLOW -->
       <div
@@ -75,7 +73,7 @@
 
     <!-- MAIN -->
     <main
-      class="relative z-10 mx-auto max-w-7xl px-4 py-8 pb-20"
+      class="relative z-10 mx-auto max-w-7xl px-4 py-8 pb-20" style="font-family:system-ui"
     >
 
       <div
@@ -427,7 +425,7 @@ export default {
         };
 
         const response = await fetch(
-          "http://localhost:3000/quantri/baiviet",
+          "http://192.168.51.252:3000/quantri/baiviet",
           {
             method: "POST",
 
@@ -492,7 +490,7 @@ export default {
                 "https"
               )
                 ? item.thumbnail
-                : "http://localhost:3000" +
+                : "http://192.168.51.252:3000" +
                   item.thumbnail,
 
             slug: item.slug,
@@ -513,58 +511,37 @@ export default {
 </script>
 
 <style scoped>
-.news-page-bg {
-  min-height: 100vh;
+
+/* MAIN */
+.news-page-bg { position: relative; min-height: 100vh; overflow-x: hidden; }
+
+/* FIXED BACKGROUND LAYER */
+.news-page-bg::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  z-index: -2;
 
   background:
     linear-gradient(
-      rgba(0, 0, 0, 0.08),
-      rgba(0, 0, 0, 0.08)
-    ),
-    url("https://www.transparenttextures.com/patterns/cubes.png"),
-    linear-gradient(
-      -45deg,
-      #072f5f,
-      #0a4c8b,
-      #0f3d75,
-      #082347
+      135deg,
+      #1b8dd6 0%,
+      #0f4f87 45%,
+      #0a2342 100%
     );
 
-  background-size: 400% 400%;
-
-  animation:
-    gradientMove 16s ease infinite;
+  pointer-events: none;
 }
 
-.wave-bg {
-  width: 100%;
-  height: 100%;
-
-  background-image:
-    radial-gradient(
-      rgba(255,255,255,0.5) 1px,
-      transparent 1px
-    );
-
-  background-size: 28px 28px;
+/* TECH OVERLAY */
+.news-page-bg::after { content: ""; position: fixed; inset: 0; z-index: -1; opacity: 0.18; background-repeat: no-repeat; /* FULL WIDTH */ background-size: cover; /* CĂN CHUẨN NHƯ MẪU */ background-position: center; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Cdefs%3E%3Cpattern id='wave' width='60' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 10 Q15 0 30 10 T60 10' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23wave)'/%3E%3Cpath d='M0 180 H320 L420 280 H720 L860 140 H1280' stroke='rgba(255,255,255,0.18)' stroke-width='2' fill='none'/%3E%3Cpath d='M0 360 H220 L320 260 H560 L700 420 H1020' stroke='rgba(255,255,255,0.18)' stroke-width='2' fill='none'/%3E%3Cpath d='M120 640 H520 L660 500 H920 L1080 700 H1480' stroke='rgba(255,255,255,0.18)' stroke-width='2' fill='none'/%3E%3Cpath d='M0 820 H420 L520 720 H860 L980 860 H1380' stroke='rgba(255,255,255,0.18)' stroke-width='2' fill='none'/%3E%3Ccircle cx='420' cy='280' r='8' fill='rgba(255,255,255,0.2)'/%3E%3Ccircle cx='660' cy='500' r='8' fill='rgba(255,255,255,0.2)'/%3E%3Ccircle cx='980' cy='860' r='8' fill='rgba(255,255,255,0.2)'/%3E%3Cg transform='translate(1560,540) scale(5)' opacity='0.55'%3E%3Ccircle cx='0' cy='0' r='52' stroke='rgba(255,255,255,0.28)' stroke-width='0.6' fill='none'/%3E%3Cellipse cx='0' cy='0' rx='20' ry='52' stroke='rgba(255,255,255,0.28)' stroke-width='0.6' fill='none'/%3E%3Cellipse cx='0' cy='0' rx='36' ry='52' stroke='rgba(255,255,255,0.18)' stroke-width='0.6' fill='none'/%3E%3Cellipse cx='0' cy='0' rx='52' ry='18' stroke='rgba(255,255,255,0.28)' stroke-width='0.6' fill='none'/%3E%3Cellipse cx='0' cy='0' rx='52' ry='34' stroke='rgba(255,255,255,0.18)' stroke-width='0.6' fill='none'/%3E%3Cline x1='-52' y1='0' x2='52' y2='0' stroke='rgba(255,255,255,0.28)' stroke-width='0.6'/%3E%3Cline x1='0' y1='-52' x2='0' y2='52' stroke='rgba(255,255,255,0.28)' stroke-width='0.6'/%3E%3C/g%3E%3C/svg%3E"); }
+/* CONTENT */
+.news-page-bg > * {
+  position: relative;
+  z-index: 2;
 }
 
-@keyframes gradientMove {
 
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-body {
-  font-family: "Inter", sans-serif;
-}
 </style>

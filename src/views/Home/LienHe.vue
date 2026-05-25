@@ -1,12 +1,12 @@
 <template>
-    <div class="contact-page-bg min-h-screen overflow-hidden">
+    <div class="news-page-bg min-h-screen overflow-hidden">
 
         <!-- TOP NAV -->
         <TopNav :activeTab="activeTab" :lang="lang" @update:activeTab="$emit('update:activeTab', $event)"
             @update:lang="$emit('update:lang', $event)" />
 
         <!-- HERO -->
-        <section class="relative overflow-hidden border-b border-white/10" style="font-family:auto;">
+        <section class="relative overflow-hidden border-b border-white/10" style="font-family:system-ui;">
 
             <!-- GRID BG -->
             <div class="absolute inset-0 opacity-[0.05]">
@@ -484,7 +484,7 @@ export default {
             try {
 
                 const res = await axios.post(
-                    "http://localhost:3000/quantri/contacts",
+                    "http://192.168.51.252:3000/quantri/contacts",
                     {
                         idFun: 111,
 
@@ -538,7 +538,7 @@ export default {
             try {
 
                 const res = await axios.post(
-                    "http://localhost:3000/setting-home",
+                    "http://192.168.51.252:3000/setting-home",
                     {
                         idFun: 100,
                     }
@@ -695,6 +695,6 @@ export default {
 }
 
 body {
-    font-family: "Inter", sans-serif;
+  font-family: system-ui;
 }
-</style>
+</style>s

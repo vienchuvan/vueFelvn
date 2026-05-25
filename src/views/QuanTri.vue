@@ -546,7 +546,7 @@ export default {
           cate,
         };
 
-        const response = await fetch("http://localhost:3000/quantri/baiviet", {
+        const response = await fetch("http://192.168.51.252:3000/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -612,7 +612,7 @@ export default {
             ? item.thumbnail.startsWith("http://") ||
               item.thumbnail.startsWith("https://")
               ? item.thumbnail
-              : "http://localhost:3000" + item.thumbnail
+              : "http://192.168.51.252:3000" + item.thumbnail
             : require("@/assets/image.png"),
         }));
         console.log("Fetched articles:", this.articles);
@@ -708,7 +708,7 @@ export default {
           id: article.id,
         };
 
-        const response = await fetch("http://localhost:3000/quantri/baiviet", {
+        const response = await fetch("http://192.168.51.252:3000/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

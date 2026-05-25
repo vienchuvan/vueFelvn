@@ -1,5 +1,5 @@
 <template>
-  <div class="globe-grid-bg min-h-screen flex flex-col overflow-hidden" style="font-family: auto;">
+  <div class="news-page-bg min-h-screen flex flex-col overflow-hidden" style="font-family:system-ui">
 
     <!-- TOP NAV -->
     <TopNav :activeTab="activeTab" />
@@ -209,7 +209,7 @@ export default {
 
         const res =
           await axios.post(
-            "http://localhost:3000/quantri/baiviet",
+            "http://192.168.51.252:3000/quantri/baiviet",
             {
               idFun: 115,
               slug,

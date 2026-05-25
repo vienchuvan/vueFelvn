@@ -191,7 +191,7 @@ export default {
                 this.loading = true;
 
                 const res = await axios.post(
-                    "http://localhost:3000/set-menu",
+                    "http://192.168.51.252:3000/set-menu",
                     {
                         idFun: 100,
                     }
@@ -225,7 +225,7 @@ export default {
                 this.loading = true;
 
                 const res = await axios.post(
-                    "http://localhost:3000/set-menu",
+                    "http://192.168.51.252:3000/set-menu",
                     {
                         idFun: 200,
                         menus: this.MOCK_MENU,

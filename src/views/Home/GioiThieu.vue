@@ -1,7 +1,11 @@
 <template>
-  <div class="globe-grid-bg min-h-screen flex flex-col">
+  <div class="news-page-bg min-h-screen flex flex-col">
+     <div class="tech-glow-top"></div> <div class="tech-glow-bottom"></div>
   <TopNav
-      :activeTab="activeTab"> </TopNav>
+      :activeTab="activeTab"
+      :lang="currentLang"
+      @update:lang="handleLanguageChange"
+    > </TopNav>
 
     <!-- MAIN WRAPPER -->
     <main class="w-full max-w-[1180px] mx-auto px-5 py-6 pb-20 flex-grow">
@@ -16,24 +20,24 @@
 
           <!-- TAB 1: GIỚI THIỆU - "CÂU CHUYỆN CỦA CHÚNG TÔI" (Mặc định mở để hiển thị ảnh mẫu mới) -->
           <div class="space-y-6" v-if="article" style="    text-align: left;
-    font-family: auto;">
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
 
             <h2 class="text-[25px] font-extrabold text-brand-orange tracking-tight">
-              {{ article.title }}
+              {{ getTitle(article) }}
             </h2>
 
             <!-- ảnh -->
-            <img v-if="article.img" :src="article.img" :alt="article.title"
+            <img v-if="article.img" :src="article.img" :alt="getTitle(article)"
               class="w-full rounded-2xl object-cover shadow-lg" />
 
             <!-- mô tả ngắn -->
-            <p v-if="article.desc" class="text-[#374151] text-[14.5px] leading-[1.8] text-justify font-normal">
-              {{ article.desc }}
+            <p v-if="getDescription(article)" class="text-[#374151] text-[14.5px] leading-[1.8] text-justify font-normal">
+              {{ getDescription(article) }}
             </p>
 
             <!-- nội dung html -->
-            <div v-if="article.content_vi" class="article-content text-[#374151] text-[14.5px] leading-[1.9]"
-              v-html="article.content_vi"></div>
+            <div v-if="getContent(article)" class="article-content text-[#374151] text-[14.5px] leading-[1.9]"
+              v-html="getContent(article)"></div>
 
           </div>
 
@@ -187,6 +191,21 @@ components: {
   },
 
   methods: {
+    getTitle(item) {
+      if (!item) return "";
+      return item[`title_${this.currentLang}`] || item.title || "";
+    },
+
+    getDescription(item) {
+      if (!item) return "";
+      return item[`desc_${this.currentLang}`] || item.desc || "";
+    },
+
+    getContent(item) {
+      if (!item) return "";
+      return item[`content_${this.currentLang}`] || item.content_vi || "";
+    },
+
     getSlugFromUrl() {
       if (this.$route) {
         if (this.$route.params && this.$route.params.slug) {
@@ -247,7 +266,7 @@ components: {
      
 
         const res = await axios.post(
-          'http://localhost:3000/quantri/baiviet',
+          'http://192.168.51.252:3000/quantri/baiviet',
           {
             idFun: 115,
             slug:"gioi-thieu",
@@ -266,7 +285,7 @@ components: {
         this.loading = true
 
         const res = await axios.post(
-          'http://localhost:3000/set-menu',
+          'http://192.168.51.252:3000/set-menu',
           {
             idFun: 100,
           }
@@ -380,21 +399,3 @@ components: {
   },
 }
 </script>
-
-<style scoped>
-.globe-grid-bg {
-  min-height: 100vh;
-
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.08),
-      rgba(0, 0, 0, 0.08)),
-    url("https://www.transparenttextures.com/patterns/cubes.png"),
-    linear-gradient(135deg,
-      #0a4c8b 0%,
-      #072f5f 100%);
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-}
-</style>

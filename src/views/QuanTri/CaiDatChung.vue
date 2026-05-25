@@ -231,7 +231,7 @@ export default {
             try {
 
                 const res = await axios.post(
-                    "http://localhost:3000/setting-home",
+                    "http://192.168.51.252:3000/setting-home",
                     {
                         idFun: 100
                     }
@@ -273,7 +273,7 @@ export default {
                 };
 
                 const res = await axios.post(
-                    "http://localhost:3000/setting-home",
+                    "http://192.168.51.252:3000/setting-home",
                     payload
                 );
 
@@ -306,7 +306,7 @@ export default {
             try {
 
                 const res = await axios.post(
-                    "http://localhost:3000/set-banner",
+                    "http://192.168.51.252:3000/set-banner",
                     {
                         idFun: 114
                     }
@@ -317,7 +317,7 @@ export default {
                     this.formData.banners =    res.data.data.map(   item => ({
                                 id: item.id,
                                
-                                 image: item.img?.startsWith('https') ? item.img : "http://localhost:3000" + item.img,
+                                 image: item.img?.startsWith('https') ? item.img : "http://192.168.51.252:3000" + item.img,
                                 img: item.img,
                                 title:   item.title,
                                 description:  item.desc,
@@ -381,7 +381,7 @@ export default {
                     formData.append("img", banner.img || "");
                 }
                 const res = await axios.post(
-                    "http://localhost:3000/set-banner",
+                    "http://192.168.51.252:3000/set-banner",
                     formData,
                     {
                         headers: {
@@ -394,7 +394,7 @@ export default {
                     alert(banner.temp ? "Thêm banner thành công" : "Cập nhật banner thành công");
                     banner.temp = false
                     banner.img = res.data.img;
-                    banner.image = "http://localhost:3000" + res.data.img;
+                    banner.image = "http://192.168.51.252:3000" + res.data.img;
                     banner.file = null;
                 }
             } catch (error) {
@@ -417,7 +417,7 @@ export default {
                     return;
                 }
                 const res = await axios.post(
-                    "http://localhost:3000/api/banner",
+                    "http://192.168.51.252:3000/api/banner",
                     {
                         idFun: 113,
                         id: banner.id,

@@ -1,13 +1,21 @@
 <template>
   <header
-    class="sticky top-0 z-50 border-b border-indigo-800/50 bg-[#0a203f] text-white" style="font-family: auto;"
-  >
+  class="fixed top-0 left-0 right-0 z-[99999]
+  bg-[#0a203f]/95
+  backdrop-blur-xl
+  border-b border-white/10
+  shadow-lg"
+>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-20 items-center justify-between">
-
+      <div
+        :class="[
+          'flex items-center justify-between transition-all duration-300',
+          isScrolled ? 'h-16' : 'h-20'
+        ]"
+      >
         <!-- LOGO -->
         <div
-          class="flex cursor-pointer items-center"
+          class="flex cursor-pointer items-center transition-transform duration-300 hover:scale-105"
           @click="$router.push('/')"
         >
           <LogoSVG />
@@ -15,7 +23,6 @@
 
         <!-- DESKTOP -->
         <div class="hidden items-center gap-5 md:flex">
-
           <!-- MENU -->
           <nav class="flex items-center gap-2">
             <router-link
@@ -23,23 +30,29 @@
               :key="item.link"
               :to="item.link"
               :class="[
-                'rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-300',
+                'relative overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-300',
                 $route.path === item.link
-                  ? 'bg-indigo-900/60 text-orange-400 shadow-lg'
+                  ? 'bg-indigo-900/70 text-orange-400 shadow-lg shadow-indigo-900/30'
                   : 'text-gray-300 hover:bg-indigo-800/40 hover:text-white'
               ]"
             >
-              {{ getMenuLabel(item) }}
+              <span class="relative z-10">
+                {{ getMenuLabel(item) }}
+              </span>
+
+              <!-- active glow -->
+              <div
+                v-if="$route.path === item.link"
+                class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-indigo-500/10"
+              />
             </router-link>
           </nav>
 
           <!-- LANGUAGE -->
-          <div
-            class="relative border-l border-indigo-800 pl-4"
-          >
+          <div class="relative border-l border-indigo-800 pl-4">
             <button
-              @click="showLang = !showLang"
-              class="flex items-center gap-2 text-gray-300 transition hover:text-white"
+              @click.stop="showLang = !showLang"
+              class="flex items-center gap-2 rounded-xl px-3 py-2 text-gray-300 transition-all duration-300 hover:bg-indigo-800/40 hover:text-white"
             >
               <Globe :size="18" />
 
@@ -51,22 +64,22 @@
             <!-- dropdown -->
             <transition
               enter-active-class="transition duration-200 ease-out"
-              enter-from-class="opacity-0 translate-y-2"
-              enter-to-class="opacity-100 translate-y-0"
+              enter-from-class="opacity-0 translate-y-2 scale-95"
+              enter-to-class="opacity-100 translate-y-0 scale-100"
               leave-active-class="transition duration-150 ease-in"
-              leave-from-class="opacity-100 translate-y-0"
-              leave-to-class="opacity-0 translate-y-2"
+              leave-from-class="opacity-100 translate-y-0 scale-100"
+              leave-to-class="opacity-0 translate-y-2 scale-95"
             >
               <div
                 v-if="showLang"
-                class="absolute right-0 mt-3 w-40 overflow-hidden rounded-2xl bg-white shadow-2xl"
+                class="absolute right-0 top-full z-[100000] mt-3 w-44 overflow-hidden rounded-2xl border border-white/10 bg-white shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
               >
                 <button
                   v-for="lang in languages"
                   :key="lang.code"
                   @click="handleLanguageChange(lang.code)"
                   :class="[
-                    'w-full px-4 py-3 text-left text-sm transition-all',
+                    'w-full px-4 py-3 text-left text-sm transition-all duration-300',
                     currentLang === lang.code
                       ? 'bg-orange-50 font-bold text-orange-500'
                       : 'text-gray-700 hover:bg-gray-100'
@@ -81,11 +94,10 @@
 
         <!-- MOBILE -->
         <div class="flex items-center gap-4 md:hidden">
-
           <!-- language -->
           <button
             @click="cycleMobileLanguage"
-            class="flex items-center gap-1 text-sm"
+            class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-white transition-all hover:bg-indigo-800/40"
           >
             <Globe :size="18" />
 
@@ -95,6 +107,7 @@
           <!-- menu -->
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
+            class="rounded-lg p-2 transition-all hover:bg-indigo-800/40"
           >
             <X
               v-if="mobileMenuOpen"
@@ -106,46 +119,45 @@
               :size="28"
             />
           </button>
-
         </div>
-
       </div>
     </div>
 
     <!-- MOBILE MENU -->
     <transition
       enter-active-class="transition duration-300 ease-out"
-      enter-from-class="opacity-0 -translate-y-2"
+      enter-from-class="opacity-0 -translate-y-3"
       enter-to-class="opacity-100 translate-y-0"
       leave-active-class="transition duration-200 ease-in"
       leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 -translate-y-2"
+      leave-to-class="opacity-0 -translate-y-3"
     >
       <div
         v-if="mobileMenuOpen"
-        class="border-t border-indigo-800/50 bg-[#0f2a4a] md:hidden"
+        class="border-t border-indigo-800/50 bg-[#0f2a4a]/95 backdrop-blur-xl md:hidden"
       >
         <div class="space-y-2 p-4">
-
           <router-link
             v-for="item in menuItems"
             :key="item.link"
             :to="item.link"
             @click="mobileMenuOpen = false"
             :class="[
-              'block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition-all',
+              'block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition-all duration-300',
               $route.path === item.link
-                ? 'bg-indigo-900/60 text-orange-400'
+                ? 'bg-indigo-900/60 text-orange-400 shadow-lg'
                 : 'text-gray-300 hover:bg-indigo-800/40 hover:text-white'
             ]"
           >
             {{ getMenuLabel(item) }}
           </router-link>
-
         </div>
       </div>
     </transition>
   </header>
+
+  <!-- spacing -->
+  <div :class="isScrolled ? 'h-16' : 'h-20'" />
 </template>
 
 <script>
@@ -190,6 +202,8 @@ export default {
       showLang: false,
 
       loading: false,
+
+      isScrolled: false,
 
       currentLang: this.lang,
 
@@ -268,7 +282,7 @@ export default {
         this.loading = true;
 
         const res = await axios.post(
-          "http://localhost:3000/set-menu",
+          "http://192.168.51.252:3000/set-menu",
           {
             idFun: 100,
           }
@@ -278,7 +292,6 @@ export default {
           this.menuItems = res.data.data.map((item) => ({
             ...item,
 
-            // fallback link
             link:
               item.link ||
               (item.id === "home"
@@ -345,6 +358,10 @@ export default {
         this.showLang = false;
       }
     },
+
+    handleScroll() {
+      this.isScrolled = window.scrollY > 20;
+    },
   },
 
   mounted() {
@@ -356,6 +373,13 @@ export default {
       "click",
       this.closeDropdown
     );
+
+    window.addEventListener(
+      "scroll",
+      this.handleScroll
+    );
+
+    this.handleScroll();
   },
 
   beforeUnmount() {
@@ -363,11 +387,25 @@ export default {
       "click",
       this.closeDropdown
     );
+
+    window.removeEventListener(
+      "scroll",
+      this.handleScroll
+    );
   },
 };
 </script>
 
 <style scoped>
+header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999999 !important;
+}
+
 .router-link-active {
   transition: all 0.3s ease;
 }

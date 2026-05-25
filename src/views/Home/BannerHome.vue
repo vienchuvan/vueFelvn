@@ -1,6 +1,6 @@
 <template>
   <section
-    class="relative w-full h-[320px] md:h-[420px] overflow-hidden bg-[#0a203f] animate-in fade-in duration-500 border-b border-white/10"
+  class="relative z-0 w-full h-[320px] md:h-[420px] overflow-hidden bg-[#0a203f] animate-in fade-in duration-500 border-b border-white/10"
   >
     <!-- Banner Slides -->
     <div
@@ -21,7 +21,7 @@
         :src="
           banner.image || (banner.img?.startsWith('https')
             ? banner.img
-            : 'http://localhost:3000' + banner.img)
+            : 'http://192.168.51.252:3000' + banner.img)
         "
         :alt="banner.title"
         class="absolute inset-0 w-full h-full object-cover"
@@ -37,12 +37,12 @@
             class="text-[24px] md:text-[34px] lg:text-[42px] font-extrabold text-white leading-tight mb-3"
           >
             <span
-              v-for="(word, i) in banner.title?.split(' ') || []"
+              v-for="(word, i) in getTitle(banner)?.split(' ') || []"
               :key="i"
               :class="highlightedWords.includes(word) ? 'text-orange-400' : ''"
             >
               {{ word }}
-              <span v-if="i < (banner.title?.split(' ').length || 0) - 1">
+              <span v-if="i < (getTitle(banner)?.split(' ').length || 0) - 1">
               </span>
             </span>
           </h1>
@@ -51,7 +51,7 @@
           <p
             class="text-[14px] md:text-[16px] text-gray-200 leading-relaxed mb-6 max-w-xl"
           >
-            {{ banner.description || banner.desc }}
+            {{ getDescription(banner) }}
           </p>
 
           <!-- CTA -->
@@ -99,8 +99,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, defineProps } from 'vue';
 import axios from 'axios';
+
+const props = defineProps({
+  lang: {
+    type: String,
+    default: 'vi',
+  },
+});
 
 const banners = ref([]);
 const currentSlide = ref(0);
@@ -108,10 +115,20 @@ const sliderTimer = ref(null);
 
 const highlightedWords = ['Đầu', 'Tư', 'FDI', 'Đào', 'Tạo'];
 
+const getTitle = (banner) => {
+  if (!banner) return '';
+  return banner[`title_${props.lang}`] || banner.title || '';
+};
+
+const getDescription = (banner) => {
+  if (!banner) return '';
+  return banner[`desc_${props.lang}`] || banner.description || banner.desc || '';
+};
+
 // Fetch banners
 const getBanners = async () => {
   try {
-    const res = await axios.post('http://localhost:3000/set-banner', {
+    const res = await axios.post('http://192.168.51.252:3000/set-banner', {
       idFun: 114,
     });
 
@@ -120,10 +137,17 @@ const getBanners = async () => {
         id: item.id,
         image: item.img?.startsWith('https')
           ? item.img
-          : 'http://localhost:3000' + item.img,
+          : 'http://192.168.51.252:3000' + item.img,
         img: item.img,
+        title_vi: item.title_vi,
+        title_en: item.title_en,
+        title_ja: item.title_ja,
         title: item.title,
+        desc_vi: item.desc_vi,
+        desc_en: item.desc_en,
+        desc_ja: item.desc_ja,
         description: item.desc,
+        desc: item.desc,
       }));
     }
   } catch (error) {
