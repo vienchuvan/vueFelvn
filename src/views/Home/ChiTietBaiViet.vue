@@ -1,5 +1,5 @@
 <template>
-  <div class="news-page-bg min-h-screen flex flex-col overflow-hidden" style="font-family:system-ui">
+  <div class="news-page-bg min-h-screen flex flex-col" style="font-family:system-ui">
 
     <!-- TOP NAV -->
     <TopNav :activeTab="activeTab" />
@@ -81,48 +81,10 @@
         </div>
 
         <!-- RIGHT -->
-        <aside class="lg:col-span-4" data-aos="fade-left">
-
-          <!-- STICKY -->
-          <div class="sticky top-5 space-y-6">
-
-            <!-- RIGHT MENU -->
-            <RightMenu :activeTab="activeTab" :lang="lang" @update:activeTab="$emit('update:activeTab', $event)"
-              @update:lang="$emit('update:lang', $event)" />
-
-            <!-- CONTACT BOX -->
-            <div
-              class="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#ff6600] to-[#ff8c00] p-7 shadow-[0_20px_60px_rgba(255,102,0,0.3)]">
-
-              <div class="absolute -top-14 -right-10 w-44 h-44 bg-white/10 rounded-full blur-3xl"></div>
-
-              <div class="relative z-10">
-
-                <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center mb-5 backdrop-blur-xl">
-                  <i class="fa-solid fa-headset text-white text-[22px]"></i>
-                </div>
-
-                <h3 class="text-white text-[22px] font-black leading-[1.4]">
-                  Cần tư vấn?
-                </h3>
-
-                <p class="mt-3 text-white/90 text-[14px] leading-[1.8]">
-                  Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn nhanh chóng và chuyên nghiệp.
-                </p>
-
-                <a href="/lien-he"
-                  class="group mt-6 inline-flex items-center gap-2 bg-white text-[#ff6600] px-6 py-3 rounded-2xl font-black hover:scale-105 transition-all duration-500">
-                  Liên hệ ngay
-
-                  <i class="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-                </a>
-
-              </div>
-
-            </div>
-
+        <aside class="lg:col-span-4">
+          <div class="sticky top-[90px]">
+            <RightMenu :subServices="subServices" :lang="currentLang" />
           </div>
-
         </aside>
 
       </div>
@@ -245,6 +207,18 @@ export default {
 </script>
 
 <style scoped>
+main {
+  display: flex;
+  align-items: flex-start; /* Quan trọng: để aside không bị kéo dài bằng main */
+}
+
+aside {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 90px;
+  /* Đảm bảo không có overflow trên thẻ aside */
+  overflow: visible !important;
+}
 h4{
   color: white !important;
 }

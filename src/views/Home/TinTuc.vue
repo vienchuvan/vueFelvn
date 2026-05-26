@@ -1,5 +1,5 @@
 <template>
-  <div class="news-page-bg min-h-screen overflow-hidden">
+  <div class="news-page-bg min-h-screen">
 <!-- GLOW --> <div class="tech-glow-top"></div> <div class="tech-glow-bottom"></div>
     <!-- TOP NAV -->
     <TopNav
@@ -244,56 +244,7 @@
               />
             </div>
 
-            <!-- CONTACT -->
-            <div
-              class="relative overflow-hidden rounded-[22px] bg-gradient-to-br from-[#ff6600] via-[#ff7b00] to-[#ff9500] p-6 shadow-[0_25px_60px_rgba(255,102,0,0.35)]"
-            >
-
-              <!-- GLOW -->
-              <div
-                class="absolute -top-16 -right-10 w-44 h-44 rounded-full bg-white/10 blur-3xl"
-              ></div>
-
-              <div class="relative z-10">
-
-                <!-- ICON -->
-                <div
-                  class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 backdrop-blur-xl"
-                >
-                  <i
-                    class="fa-solid fa-headset text-[20px] text-white"
-                  ></i>
-                </div>
-
-                <!-- TITLE -->
-                <h3
-                  class="text-[22px] font-black leading-[1.4] text-white"
-                >
-                  Tư vấn doanh nghiệp
-                </h3>
-
-                <!-- TEXT -->
-                <p
-                  class="mt-3 text-[13px] leading-[1.9] text-white/90"
-                >
-                  Liên hệ ngay để được hỗ trợ thủ tục pháp lý, đầu tư và vận hành doanh nghiệp hiệu quả.
-                </p>
-
-                <!-- BUTTON -->
-                <a
-                  href="/lien-he"
-                  class="group mt-6 inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-[13px] font-black text-[#ff6600] transition-all duration-500 hover:scale-105"
-                >
-                  Liên hệ ngay
-
-                  <i
-                    class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover:translate-x-1"
-                  ></i>
-                </a>
-
-              </div>
-
-            </div>
+     
 
           </div>
 

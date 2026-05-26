@@ -1,5 +1,5 @@
 <template>
-  <div class="news-page-bg min-h-screen flex flex-col overflow-hidden" style="font-family:system-ui">
+  <div class="news-page-bg min-h-screen flex flex-col" style="font-family: system-ui">
     <!-- TOP NAV -->
     <TopNav
       :activeTab="activeTab"
@@ -9,7 +9,10 @@
     />
 
     <!-- BREADCRUMB -->
-    <section class="relative w-full overflow-hidden border-b border-white/10" style="font-family:system-ui">
+    <section
+      class="relative w-full overflow-hidden border-b border-white/10"
+      style="font-family: system-ui"
+    >
       <!-- GLOW -->
       <div
         class="absolute top-[-120px] left-[-120px] w-[320px] h-[320px] bg-orange-500/20 blur-3xl rounded-full"
@@ -34,7 +37,10 @@
     </section>
 
     <!-- MAIN -->
-    <section class="relative overflow-hidden py-8 md:py-10" style="font-family:system-ui">
+    <section
+      class="relative overflow-hidden py-8 md:py-10"
+      style="font-family: system-ui"
+    >
       <div class="mx-auto max-w-[1180px] px-5">
         <div class="grid grid-cols-1 gap-7 lg:grid-cols-[1fr_300px]">
           <!-- LEFT -->
@@ -120,46 +126,7 @@
               </div>
 
               <!-- CONTACT BOX -->
-              <div
-                class="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#ff6600] via-[#ff7a00] to-[#ff9500] p-5 shadow-[0_15px_45px_rgba(255,102,0,0.30)]"
-              >
-                <!-- GLOW -->
-                <div
-                  class="absolute -top-12 -right-12 h-44 w-44 rounded-full bg-white/10 blur-3xl"
-                ></div>
-
-                <div class="relative z-10">
-                  <!-- ICON -->
-                  <div
-                    class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 backdrop-blur-xl"
-                  >
-                    <i class="fa-solid fa-headset text-[18px] text-white"></i>
-                  </div>
-
-                  <!-- TITLE -->
-                  <h3 class="text-[20px] font-black leading-[1.4] text-white">
-                    Cần hỗ trợ?
-                  </h3>
-
-                  <!-- DESC -->
-                  <p class="mt-3 text-[13px] leading-[1.8] text-white/90">
-                    Đội ngũ tư vấn chuyên nghiệp của chúng tôi luôn sẵn sàng hỗ trợ doanh
-                    nghiệp của bạn.
-                  </p>
-
-                  <!-- BUTTON -->
-                  <a
-                    href="/lien-he"
-                    class="group mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-[13px] font-black text-[#ff6600] transition-all duration-500 hover:-translate-y-1 hover:scale-105"
-                  >
-                    Liên hệ ngay
-
-                    <i
-                      class="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"
-                    ></i>
-                  </a>
-                </div>
-              </div>
+            
             </div>
           </aside>
         </div>
@@ -255,9 +222,7 @@ export default {
               ? item.desc_jp || item.desc_vi
               : item.desc_vi || "",
 
-          img: item.thumbnail?.startsWith("https")
-            ? item.thumbnail
-            :  item.thumbnail,
+          img: item.thumbnail?.startsWith("https") ? item.thumbnail : item.thumbnail,
 
           slug: item.slug,
         }));
@@ -270,6 +235,18 @@ export default {
 </script>
 
 <style scoped>
+main {
+  display: flex;
+  align-items: flex-start; /* Quan trọng: để aside không bị kéo dài bằng main */
+}
+
+aside {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 90px;
+  /* Đảm bảo không có overflow trên thẻ aside */
+  overflow: visible !important;
+}
 .services-page {
   min-height: 100vh;
 
