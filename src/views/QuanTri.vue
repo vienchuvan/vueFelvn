@@ -164,7 +164,7 @@
         <!-- CONTENT -->
         <main class="flex-1 p-8 overflow-x-hidden">
           <!-- DASHBOARD -->
-          <div v-if="activeMenu === 'dashboard'" class="space-y-6" style="display: none" >
+          <div v-if="activeMenu === 'dashboard'" class="space-y-6" style="display: none">
             <h2 class="text-2xl font-bold text-gray-800">Tổng quan hệ thống</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -546,7 +546,7 @@ export default {
           cate,
         };
 
-        const response = await fetch("http://192.168.51.252:3000/quantri/baiviet", {
+        const response = await fetch("http://localhost:3000/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -612,7 +612,7 @@ export default {
             ? item.thumbnail.startsWith("http://") ||
               item.thumbnail.startsWith("https://")
               ? item.thumbnail
-              : "http://192.168.51.252:3000" + item.thumbnail
+              : "http://localhost:3000" + item.thumbnail
             : require("@/assets/image.png"),
         }));
         console.log("Fetched articles:", this.articles);
@@ -708,7 +708,7 @@ export default {
           id: article.id,
         };
 
-        const response = await fetch("http://192.168.51.252:3000/quantri/baiviet", {
+        const response = await fetch("http://localhost:3000/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

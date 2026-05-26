@@ -20,7 +20,7 @@
           >
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <!-- TEXT -->
-              <div class="md:col-span-7 space-y-5" v-if="article">
+              <div class="md:col-span-7 space-y-5" v-if="article" :key="currentLang">
                 <div class="flex items-center space-x-3.5">
                   <div class="w-[4px] h-[30px] bg-brand-orange rounded-full"></div>
 
@@ -40,9 +40,9 @@
                   <a
                     :href="`/bai-viet/${article.slug}`"
                     target="_blank"
-                    class="group inline-flex items-center gap-2 text-brand-orange text-[14px] font-bold hover:text-orange-600 transition-all duration-300"
+                    class="group text-left inline-flex items-center gap-2 text-brand-orange text-[14px] font-bold hover:text-orange-600 transition-all duration-300"
                   >
-                    Xem chi tiết
+                    {{ buttonText }}
 
                     <i
                       class="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"
@@ -65,14 +65,14 @@
           </section>
 
           <!-- FEATURED SERVICES -->
-          <section class="space-y-6">
+          <section class="space-y-6 mt-14">
             <!-- HEADER -->
             <div data-aos="fade-right" class="flex justify-between items-center">
               <div class="flex items-center space-x-3.5">
                 <div class="w-[4px] h-[30px] bg-brand-orange rounded-full"></div>
 
                 <h2 class="text-[26px] font-black text-white tracking-tight">
-                  Dịch Vụ Nổi Bật
+                  {{ serviceTitle }}
                 </h2>
               </div>
 
@@ -81,7 +81,7 @@
                 target="_blank"
                 class="group text-brand-orange text-[15px] font-bold flex items-center gap-2 hover:text-orange-300 transition-all duration-300"
               >
-                Xem tất cả
+                {{ viewAllText }}
 
                 <i
                   class="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"
@@ -102,8 +102,8 @@
                 <div class="h-48 overflow-hidden">
                   <img
                     :src="service.image"
-                    class="w-full h-full object-cover transition-transform duration-700"
-                    :alt="service.title"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    :alt="getTitle(service)"
                   />
                 </div>
 
@@ -133,7 +133,7 @@
                     :href="`/bai-viet/${service.slug}`"
                     class="group/link mt-5 inline-flex items-center gap-2 text-brand-orange text-[13px] font-bold"
                   >
-                    Xem chi tiết
+                    {{ buttonText }}
 
                     <i
                       class="fa-solid fa-arrow-right text-[11px] transition-transform duration-300 group-hover/link:translate-x-1"
@@ -165,18 +165,39 @@
                     <i class="fa-solid fa-graduation-cap text-white text-[24px]"></i>
                   </div>
 
-                  <h2 class="text-white text-[24px] md:text-[30px] font-black">
-                    Đào Tạo Doanh Nghiệp
-                  </h2>
+                  <h4 class="text-white text-[24px] md:text-[25px] font-black">
+                    {{
+                      currentLang === "en"
+                        ? "Corporate Training"
+                        : currentLang === "ja"
+                        ? "企業研修"
+                        : "Đào Tạo Doanh Nghiệp"
+                    }}
+                  </h4>
                 </div>
 
                 <p
-                  class="text-white/95 text-[15px] leading-[1.9] font-medium max-w-[620px]"
+                  class="text-white/95 text-[15px] text-left leading-[1.9] font-medium max-w-[620px]"
                 >
-                  Chương trình
-                  <span class="font-black"> "Giao tiếp thấu cảm & Tạo ảnh hưởng" </span>
-                  giúp nâng cao hiệu quả làm việc, giải quyết rào cản đa văn hóa và chuẩn
-                  hóa kỹ năng giao tiếp số trong thời đại mới.
+                  <template v-if="currentLang === 'en'">
+                    The
+                    <span class="font-black"> "Empathic Communication & Influence" </span>
+                    program helps improve workplace efficiency, overcome multicultural
+                    barriers, and standardize digital communication skills.
+                  </template>
+
+                  <template v-else-if="currentLang === 'ja'">
+                    <span class="font-black"> 「共感コミュニケーションと影響力」 </span>
+                    プログラムは、業務効率の向上、多文化間の障壁解消、
+                    デジタル時代のコミュニケーション能力向上を支援します。
+                  </template>
+
+                  <template v-else>
+                    Chương trình
+                    <span class="font-black"> "Giao tiếp thấu cảm & Tạo ảnh hưởng" </span>
+                    giúp nâng cao hiệu quả làm việc, giải quyết rào cản đa văn hóa và
+                    chuẩn hóa kỹ năng giao tiếp số trong thời đại mới.
+                  </template>
                 </p>
 
                 <a
@@ -185,7 +206,13 @@
                   class="group relative mt-7 inline-flex overflow-hidden rounded-2xl bg-white px-7 py-3 font-black text-[#ff6600] transition-all duration-500 hover:-translate-y-1 hover:scale-105"
                 >
                   <span class="relative z-10 flex items-center gap-2">
-                    Tìm hiểu khóa học
+                    {{
+                      currentLang === "en"
+                        ? "Explore Courses"
+                        : currentLang === "ja"
+                        ? "コースを見る"
+                        : "Tìm hiểu khóa học"
+                    }}
 
                     <i
                       class="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"
@@ -216,7 +243,13 @@
                 <h2
                   class="text-white text-[26px] md:text-[32px] font-black tracking-tight"
                 >
-                  Tin Tức & Cập Nhật Mới
+                  {{
+                    currentLang === "en"
+                      ? "News & Updates"
+                      : currentLang === "ja"
+                      ? "ニュースと最新情報"
+                      : "Tin Tức & Cập Nhật Mới"
+                  }}
                 </h2>
               </div>
 
@@ -224,7 +257,13 @@
                 href="#"
                 class="group text-brand-orange text-[15px] font-bold flex items-center gap-2 hover:text-orange-300 transition"
               >
-                Xem tất cả
+                {{
+                  currentLang === "en"
+                    ? "View All"
+                    : currentLang === "ja"
+                    ? "すべて見る"
+                    : "Xem tất cả"
+                }}
 
                 <i
                   class="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"
@@ -268,12 +307,22 @@
                   >
                     {{ getDescription(item) }}
                   </p>
+
+                  <a
+                    :href="`/bai-viet/${item.slug}`"
+                    class="inline-flex items-center gap-2 mt-4 text-brand-orange text-[13px] font-bold"
+                  >
+                    {{ buttonText }}
+
+                    <i class="fa-solid fa-arrow-right text-[11px]"></i>
+                  </a>
                 </div>
               </div>
             </div>
           </section>
         </div>
 
+        <!-- RIGHT -->
         <aside class="lg:col-span-4">
           <div class="sticky top-[90px]">
             <RightMenu :subServices="subServices" :lang="currentLang" />
@@ -285,6 +334,7 @@
     <FooterWeb />
   </div>
 </template>
+
 <script>
 import axios from "axios";
 import AOS from "aos";
@@ -337,24 +387,69 @@ export default {
     };
   },
 
+  computed: {
+    buttonText() {
+      const text = {
+        vi: "Xem chi tiết",
+        en: "View Details",
+        ja: "詳細を見る",
+      };
+
+      return text[this.currentLang] || text.vi;
+    },
+
+    viewAllText() {
+      const text = {
+        vi: "Xem tất cả",
+        en: "View All",
+        ja: "すべて見る",
+      };
+
+      return text[this.currentLang] || text.vi;
+    },
+
+    serviceTitle() {
+      const text = {
+        vi: "Dịch Vụ Nổi Bật",
+        en: "Featured Services",
+        ja: "注目サービス",
+      };
+
+      return text[this.currentLang] || text.vi;
+    },
+  },
+
   methods: {
+    getLangKey(lang) {
+      if (lang === "jp") return "ja";
+      return lang;
+    },
+
     getTitle(item) {
       if (!item) return "";
-      return item[`title_${this.currentLang}`] || item.title_vi || "";
+
+      const lang = this.getLangKey(this.currentLang); 
+      console.log("lang ", lang, item);
+      
+
+      return item[`title_${lang}`] || item.title_vi || "";
     },
 
     getDescription(item) {
       if (!item) return "";
-      return item[`desc_${this.currentLang}`] || item.desc_vi || "";
+
+      const lang = this.getLangKey(this.currentLang);
+
+      return item[`desc_${lang}`] || item.desc_vi || "";
     },
 
     handleLanguageChange(newLang) {
-      this.currentLang = newLang;
+      this.currentLang = this.getLangKey(newLang);
     },
 
     async fetchArticles(cate = "service") {
       try {
-        const response = await fetch("http://192.168.51.252:3000/quantri/baiviet", {
+        const response = await fetch("http://192.168.0.104:3000/quantri/baiviet", {
           method: "POST",
 
           headers: {
@@ -383,15 +478,15 @@ export default {
 
           title_vi: item.title_vi,
           title_en: item.title_en,
-          title_ja: item.title_ja,
+          title_ja: item.title_ja || item.title_jp,
 
           desc_vi: item.desc_vi,
           desc_en: item.desc_en,
-          desc_ja: item.desc_ja,
+          desc_ja: item.desc_ja || item.desc_jp,
 
           image: item.thumbnail?.startsWith("https")
             ? item.thumbnail
-            : "http://192.168.51.252:3000" + item.thumbnail,
+            : "http://192.168.0.104:3000" + item.thumbnail,
 
           slug: item.slug,
         }));
@@ -402,7 +497,7 @@ export default {
 
     async fetchArticlesNews(cate = "news") {
       try {
-        const response = await fetch("http://192.168.51.252:3000/quantri/baiviet", {
+        const response = await fetch("http://192.168.0.104:3000/quantri/baiviet", {
           method: "POST",
 
           headers: {
@@ -424,15 +519,15 @@ export default {
 
           title_vi: item.title_vi,
           title_en: item.title_en,
-          title_ja: item.title_ja,
+          title_ja: item.title_ja || item.title_jp,
 
           desc_vi: item.desc_vi,
           desc_en: item.desc_en,
-          desc_ja: item.desc_ja,
+          desc_ja: item.desc_ja || item.desc_jp,
 
           image: item.thumbnail?.startsWith("https")
             ? item.thumbnail
-            : "http://192.168.51.252:3000" + item.thumbnail,
+            : "http://192.168.0.104:3000" + item.thumbnail,
 
           slug: item.slug,
         }));
@@ -443,7 +538,7 @@ export default {
 
     async fetchSidebarMenu() {
       try {
-        const res = await axios.get("http://192.168.51.252:3000/sidebar-menu", {
+        const res = await axios.get("http://192.168.0.104:3000/sidebar-menu", {
           params: {
             idFun: 114,
           },
@@ -487,19 +582,38 @@ export default {
     },
 
     async fetchArticle() {
-      try {
-        const res = await axios.post("http://192.168.51.252:3000/quantri/baiviet", {
-          idFun: 115,
-          slug: "ve-le-viet-nam",
-        });
-
-        if (res.data.success) {
-          this.article = res.data.data;
-        }
-      } catch (error) {
-        console.log(error);
+  try {
+    const res = await axios.post(
+      "http://192.168.0.104:3000/quantri/baiviet",
+      {
+        idFun: 115,
+        slug: "ve-le-viet-nam",
       }
-    },
+    );
+
+    if (res.data.success) {
+      const item = res.data.data;
+
+      this.article = {
+        ...item,
+
+        // normalize language
+        title_ja: item.title_ja || item.title_jp || "",
+        desc_ja: item.desc_ja || item.desc_jp || "",
+
+        title_en: item.title_en || "",
+        desc_en: item.desc_en || "",
+
+        title_vi: item.title_vi || "",
+        desc_vi: item.desc_vi || "",
+      };
+
+      console.log("aaaaaaaaaaa ", this.article);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+},
 
     handleMenuClick(itemId) {
       this.$emit("update:activeTab", itemId);
@@ -524,17 +638,17 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 main {
   display: flex;
-  align-items: flex-start; /* Quan trọng: để aside không bị kéo dài bằng main */
+  align-items: flex-start;
 }
 
 aside {
   position: -webkit-sticky;
   position: sticky;
   top: 90px;
-  /* Đảm bảo không có overflow trên thẻ aside */
   overflow: visible !important;
 }
 </style>

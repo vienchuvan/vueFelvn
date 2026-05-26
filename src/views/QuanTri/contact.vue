@@ -245,7 +245,7 @@ export default {
                 this.loading = true;
 
                 const response = await axios.post(
-                    "http://192.168.51.252:3000/quantri/contacts",
+                    "http://192.168.0.104:3000/quantri/contacts",
                     {
                         idFun: 114,
                     }
@@ -265,7 +265,7 @@ export default {
         async updateContact(contact) {
             try {
                 const response = await axios.post(
-                    "http://192.168.51.252:3000/quantri/contacts",
+                    "http://192.168.0.104:3000/quantri/contacts",
                     {
                         idFun: 112,
 
@@ -298,7 +298,7 @@ export default {
 
             try {
                 const response = await axios.post(
-                    "http://192.168.51.252:3000/quantri/contacts",
+                    "http://192.168.0.104:3000/quantri/contacts",
                     {
                         idFun: 113,
                         id,

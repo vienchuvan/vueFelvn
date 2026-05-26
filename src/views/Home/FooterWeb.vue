@@ -164,7 +164,7 @@ export default {
     async getSettings() {
       try {
         const res = await axios.post(
-          "http://192.168.51.252:3000/setting-home",
+          "http://192.168.0.104:3000/setting-home",
           {
             idFun: 100,
           }
@@ -192,7 +192,7 @@ export default {
       }
 
       // ảnh local server
-      return "http://192.168.51.252:3000" + img;
+      return "http://192.168.0.104:3000" + img;
     },
   },
 };

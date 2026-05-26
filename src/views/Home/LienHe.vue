@@ -407,7 +407,7 @@ export default {
       this.loading = true;
 
       try {
-        const res = await axios.post("http://192.168.51.252:3000/quantri/contacts", {
+        const res = await axios.post("http://192.168.0.104:3000/quantri/contacts", {
           idFun: 111,
 
           name: this.form.name,
@@ -442,7 +442,7 @@ export default {
 
     async getSettings() {
       try {
-        const res = await axios.post("http://192.168.51.252:3000/setting-home", {
+        const res = await axios.post("http://192.168.0.104:3000/setting-home", {
           idFun: 100,
         });
 

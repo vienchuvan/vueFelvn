@@ -21,7 +21,7 @@
         :src="
           banner.image || (banner.img?.startsWith('https')
             ? banner.img
-            : 'http://192.168.51.252:3000' + banner.img)
+            : 'http://192.168.0.104:3000' + banner.img)
         "
         :alt="banner.title"
         class="absolute inset-0 w-full h-full object-cover"
@@ -128,7 +128,7 @@ const getDescription = (banner) => {
 // Fetch banners
 const getBanners = async () => {
   try {
-    const res = await axios.post('http://192.168.51.252:3000/set-banner', {
+    const res = await axios.post('http://192.168.0.104:3000/set-banner', {
       idFun: 114,
     });
 
@@ -137,7 +137,7 @@ const getBanners = async () => {
         id: item.id,
         image: item.img?.startsWith('https')
           ? item.img
-          : 'http://192.168.51.252:3000' + item.img,
+          : 'http://192.168.0.104:3000' + item.img,
         img: item.img,
         title_vi: item.title_vi,
         title_en: item.title_en,

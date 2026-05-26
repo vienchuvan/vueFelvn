@@ -376,7 +376,7 @@ export default {
         };
 
         const response = await fetch(
-          "http://192.168.51.252:3000/quantri/baiviet",
+          "http://192.168.0.104:3000/quantri/baiviet",
           {
             method: "POST",
 
@@ -441,7 +441,7 @@ export default {
                 "https"
               )
                 ? item.thumbnail
-                : "http://192.168.51.252:3000" +
+                : "http://192.168.0.104:3000" +
                   item.thumbnail,
 
             slug: item.slug,

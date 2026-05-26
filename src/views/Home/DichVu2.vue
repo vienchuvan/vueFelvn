@@ -200,7 +200,7 @@ export default {
     async fetchArticles(cate = "service") {
       try {
         const response = await fetch(
-          "http://192.168.51.252:3000/quantri/baiviet",
+          "http://192.168.0.104:3000/quantri/baiviet",
           {
             method: "POST",
 
