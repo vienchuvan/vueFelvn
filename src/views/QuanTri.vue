@@ -546,7 +546,7 @@ export default {
           cate,
         };
 
-        const response = await fetch("http://localhost:3000/quantri/baiviet", {
+        const response = await fetch("https://miraivietnam.com/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -708,7 +708,7 @@ export default {
           id: article.id,
         };
 
-        const response = await fetch("http://localhost:3000/quantri/baiviet", {
+        const response = await fetch("https://miraivietnam.com/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
