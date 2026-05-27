@@ -170,7 +170,7 @@ export default {
 
         const res =
           await axios.post(
-            "http://192.168.0.104:3000/quantri/baiviet",
+            "https://miraivietnam.com/api/quantri/baiviet",
             {
               idFun: 115,
               slug,

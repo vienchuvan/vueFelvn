@@ -164,7 +164,7 @@ export default {
     async getSettings() {
       try {
         const res = await axios.post(
-          "http://192.168.0.104:3000/setting-home",
+          "https://miraivietnam.com/api/setting-home",
           {
             idFun: 100,
           }

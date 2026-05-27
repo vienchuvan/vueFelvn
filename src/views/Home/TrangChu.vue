@@ -449,7 +449,7 @@ export default {
 
     async fetchArticles(cate = "service") {
       try {
-        const response = await fetch("http://192.168.0.104:3000/quantri/baiviet", {
+        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
           method: "POST",
 
           headers: {
@@ -497,7 +497,7 @@ export default {
 
     async fetchArticlesNews(cate = "news") {
       try {
-        const response = await fetch("http://192.168.0.104:3000/quantri/baiviet", {
+        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
           method: "POST",
 
           headers: {
@@ -538,7 +538,7 @@ export default {
 
     async fetchSidebarMenu() {
       try {
-        const res = await axios.get("http://192.168.0.104:3000/sidebar-menu", {
+        const res = await axios.get("https://miraivietnam.com/api/sidebar-menu", {
           params: {
             idFun: 114,
           },
@@ -584,7 +584,7 @@ export default {
     async fetchArticle() {
   try {
     const res = await axios.post(
-      "http://192.168.0.104:3000/quantri/baiviet",
+      "https://miraivietnam.com/api/quantri/baiviet",
       {
         idFun: 115,
         slug: "ve-le-viet-nam",

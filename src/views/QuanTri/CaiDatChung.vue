@@ -231,7 +231,7 @@ export default {
             try {
 
                 const res = await axios.post(
-                    "http://192.168.0.104:3000/setting-home",
+                    "https://miraivietnam.com/api/setting-home",
                     {
                         idFun: 100
                     }
@@ -273,7 +273,7 @@ export default {
                 };
 
                 const res = await axios.post(
-                    "http://192.168.0.104:3000/setting-home",
+                    "https://miraivietnam.com/api/setting-home",
                     payload
                 );
 
@@ -306,7 +306,7 @@ export default {
             try {
 
                 const res = await axios.post(
-                    "http://192.168.0.104:3000/set-banner",
+                    "https://miraivietnam.com/api/set-banner",
                     {
                         idFun: 114
                     }
@@ -381,7 +381,7 @@ export default {
                     formData.append("img", banner.img || "");
                 }
                 const res = await axios.post(
-                    "http://192.168.0.104:3000/set-banner",
+                    "https://miraivietnam.com/api/set-banner",
                     formData,
                     {
                         headers: {
@@ -417,7 +417,7 @@ export default {
                     return;
                 }
                 const res = await axios.post(
-                    "http://192.168.0.104:3000/api/banner",
+                    "https://miraivietnam.com/api/api/banner",
                     {
                         idFun: 113,
                         id: banner.id,

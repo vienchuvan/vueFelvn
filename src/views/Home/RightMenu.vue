@@ -175,7 +175,7 @@ export default {
     async getSidebarMenu() {
       try {
         const response = await axios.post(
-          "http://192.168.0.104:3000/sidebar-menu",
+          "https://miraivietnam.com/api/sidebar-menu",
           {
             idFun: 114,
           }

@@ -128,7 +128,7 @@ const getDescription = (banner) => {
 // Fetch banners
 const getBanners = async () => {
   try {
-    const res = await axios.post('http://192.168.0.104:3000/set-banner', {
+    const res = await axios.post('https://miraivietnam.com/api/set-banner', {
       idFun: 114,
     });
 

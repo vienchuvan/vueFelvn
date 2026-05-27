@@ -194,7 +194,7 @@ export default {
       try {
         loading.value = true;
         const res = await axios.post(
-          'http://192.168.0.104:3000/set-menu',
+          'https://miraivietnam.com/api/set-menu',
           { idFun: 100 }
         );
 
