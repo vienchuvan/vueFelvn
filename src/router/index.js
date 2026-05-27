@@ -13,7 +13,7 @@ const routes = [
     component: TrangChu
   },
   {
-    path: '/admin',
+    path: '/admin-quantri',
     name: 'AdminApp',
     component: QuanTri
   },

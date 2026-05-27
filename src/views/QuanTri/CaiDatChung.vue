@@ -317,7 +317,7 @@ export default {
                     this.formData.banners =    res.data.data.map(   item => ({
                                 id: item.id,
                                
-                                 image: item.img?.startsWith('https') ? item.img : "http://192.168.0.104:3000" + item.img,
+                                 image: item.img?.startsWith('https') ? item.img : "https://miraivietnam.com/" + item.img,
                                 img: item.img,
                                 title:   item.title,
                                 description:  item.desc,
@@ -394,7 +394,7 @@ export default {
                     alert(banner.temp ? "Thêm banner thành công" : "Cập nhật banner thành công");
                     banner.temp = false
                     banner.img = res.data.img;
-                    banner.image = "http://192.168.0.104:3000" + res.data.img;
+                    banner.image = "https://miraivietnam.com/" + res.data.img;
                     banner.file = null;
                 }
             } catch (error) {
