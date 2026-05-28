@@ -614,6 +614,7 @@ export default {
               ? item.thumbnail
               : "https://miraivietnam.com" + item.thumbnail
             : require("@/assets/image.png"),
+            slug: item.slug,
         }));
         console.log("Fetched articles:", this.articles);
 

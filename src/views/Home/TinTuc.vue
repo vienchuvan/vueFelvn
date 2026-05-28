@@ -256,6 +256,7 @@
 
   </div>
    <FooterWeb />
+     <FloattingZalo />
 </template>
 
 <script>
@@ -265,13 +266,14 @@ import "aos/dist/aos.css";
 import RightMenu from "@/views/Home/RightMenu.vue";
 import TopNav from "@/views/Home/TopNav.vue";
 import FooterWeb from "@/views/Home/FooterWeb.vue";
+import FloattingZalo from "@/views/Home/FloattingZalo.vue";
 export default {
   name: "newssOverview",
 
   components: {
     TopNav,
     RightMenu,
-    FooterWeb,
+    FooterWeb,FloattingZalo
   },
 
   props: {

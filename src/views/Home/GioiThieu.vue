@@ -280,7 +280,7 @@ export default {
     },
     async fetchArticle() {
       try {
-        const res = await axios.post("http://192.168.51.252:3000/quantri/baiviet", {
+        const res = await axios.post("https://miraivietnam.com/quantri/baiviet", {
           idFun: 115,
           slug: "gioi-thieu",
         });
@@ -296,7 +296,7 @@ export default {
       try {
         this.loading = true;
 
-        const res = await axios.post("http://192.168.51.252:3000/set-menu", {
+        const res = await axios.post("https://miraivietnam.com/set-menu", {
           idFun: 100,
         });
 

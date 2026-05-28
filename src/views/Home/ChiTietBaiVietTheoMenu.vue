@@ -91,6 +91,7 @@
     </main>
 
   </div>
+    <FloattingZalo />
    <FooterWeb />
 </template>
 
@@ -102,13 +103,14 @@ import "aos/dist/aos.css";
 import RightMenu from "./RightMenu.vue";
 import TopNav from "./TopNav.vue";
 import FooterWeb from "@/views/Home/FooterWeb.vue";
+import FloattingZalo from "./FloattingZalo.vue";
 export default {
   name: "BaiVietChiTietTheoMenu",
 
   components: {
     TopNav,
     RightMenu,
-    FooterWeb,
+    FooterWeb, FloattingZalo,
   },
 
   props: {

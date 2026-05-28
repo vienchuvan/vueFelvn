@@ -177,6 +177,16 @@
                         <div>
 
                             <label class="block text-sm font-medium text-gray-700 mb-1" style="text-align: left;">
+                                Link
+                            </label>
+<input type="text" v-model="form.slug"
+                                class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-500"
+                                placeholder="Nhập link url.." />
+                           
+                        </div>
+                        <div>
+
+                            <label class="block text-sm font-medium text-gray-700 mb-1" style="text-align: left;">
                                 Trạng thái
                             </label>
 
@@ -324,6 +334,12 @@ export default {
 
     },
     watch: {
+        'form.title.vi'(newVal) {
+        // chỉ auto nếu slug đang trống
+        if (!this.form.slug) {
+            this.form.slug = this.slugify(newVal)
+        }
+    },
         article: {
             handler(newArticle) {
                 if (newArticle) {
@@ -363,6 +379,7 @@ export default {
     },
     methods: {
         loadArticleData(article) {
+            console.log("Loading article data:", article)
             if (!article) return
 
             this.form = {
@@ -553,7 +570,9 @@ export default {
                 }
 
                 // AUTO SLUG
-                this.form.slug = this.slugify(this.form.title.vi)
+                if (!this.form.slug.trim()) {
+    this.form.slug = this.slugify(this.form.title.vi)
+}
 
                 // AUTO DATE
                 if (!this.form.publish_date) {

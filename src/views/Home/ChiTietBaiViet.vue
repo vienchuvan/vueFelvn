@@ -92,14 +92,14 @@
     </main>
 
   </div>
-  
+    <FloattingZalo />
 </template>
 
 <script>
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import FloattingZalo from "./FloattingZalo.vue";
 import RightMenu from "./RightMenu.vue";
 import TopNav from "./TopNav.vue";
 
@@ -108,7 +108,7 @@ export default {
 
   components: {
     TopNav,
-    RightMenu,
+    RightMenu,  FloattingZalo,
   },
 
   props: {

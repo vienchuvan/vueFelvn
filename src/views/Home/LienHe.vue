@@ -312,7 +312,7 @@
       </div>
     </section>
   </div>
-
+  <FloattingZalo />
   <FooterWeb />
 </template>
 
@@ -325,14 +325,14 @@ import "aos/dist/aos.css";
 import RightMenu from "@/views/Home/RightMenu.vue";
 import TopNav from "@/views/Home/TopNav.vue";
 import FooterWeb from "@/views/Home/FooterWeb.vue";
-
+import FloattingZalo from "@/views/Home/FloattingZalo.vue";
 export default {
   name: "ContactSection",
 
   components: {
     TopNav,
     RightMenu,
-    FooterWeb,
+    FooterWeb, FloattingZalo,
   },
 
   props: {
