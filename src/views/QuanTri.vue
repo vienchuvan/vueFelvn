@@ -546,7 +546,7 @@ export default {
           cate,
         };
 
-        const response = await fetch("https://miraivietnam.com/quantri/baiviet", {
+        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -612,8 +612,9 @@ export default {
             ? item.thumbnail.startsWith("http://") ||
               item.thumbnail.startsWith("https://")
               ? item.thumbnail
-              : "http://localhost:3000" + item.thumbnail
+              : "https://miraivietnam.com" + item.thumbnail
             : require("@/assets/image.png"),
+            slug: item.slug,
         }));
         console.log("Fetched articles:", this.articles);
 
@@ -708,7 +709,7 @@ export default {
           id: article.id,
         };
 
-        const response = await fetch("https://miraivietnam.com/quantri/baiviet", {
+        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

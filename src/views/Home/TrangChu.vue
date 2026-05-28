@@ -330,7 +330,7 @@
         </aside>
       </div>
     </main>
-
+    <FloattingZalo />
     <FooterWeb />
   </div>
 </template>
@@ -344,6 +344,7 @@ import RightMenu from "./RightMenu.vue";
 import BannerHome from "./BannerHome.vue";
 import TopNav from "./TopNav.vue";
 import FooterWeb from "./FooterWeb.vue";
+import FloattingZalo from "./FloattingZalo.vue";
 
 export default {
   name: "TrangChu",
@@ -353,6 +354,7 @@ export default {
     TopNav,
     RightMenu,
     FooterWeb,
+    FloattingZalo,
   },
 
   props: {
@@ -428,9 +430,8 @@ export default {
     getTitle(item) {
       if (!item) return "";
 
-      const lang = this.getLangKey(this.currentLang); 
+      const lang = this.getLangKey(this.currentLang);
       console.log("lang ", lang, item);
-      
 
       return item[`title_${lang}`] || item.title_vi || "";
     },
@@ -486,7 +487,7 @@ export default {
 
           image: item.thumbnail?.startsWith("https")
             ? item.thumbnail
-            : "http://192.168.0.104:3000" + item.thumbnail,
+            : "https://miraivietnam.com" + item.thumbnail,
 
           slug: item.slug,
         }));
@@ -527,7 +528,7 @@ export default {
 
           image: item.thumbnail?.startsWith("https")
             ? item.thumbnail
-            : "http://192.168.0.104:3000" + item.thumbnail,
+            : "https://miraivietnam.com" + item.thumbnail,
 
           slug: item.slug,
         }));
@@ -582,38 +583,35 @@ export default {
     },
 
     async fetchArticle() {
-  try {
-    const res = await axios.post(
-      "https://miraivietnam.com/api/quantri/baiviet",
-      {
-        idFun: 115,
-        slug: "ve-le-viet-nam",
+      try {
+        const res = await axios.post("https://miraivietnam.com/api/quantri/baiviet", {
+          idFun: 115,
+          slug: "gioi-thieu",
+        });
+
+        if (res.data.success) {
+          const item = res.data.data;
+
+          this.article = {
+            ...item,
+
+            // normalize language
+            title_ja: item.title_ja || item.title_jp || "",
+            desc_ja: item.desc_ja || item.desc_jp || "",
+
+            title_en: item.title_en || "",
+            desc_en: item.desc_en || "",
+
+            title_vi: item.title_vi || "",
+            desc_vi: item.desc_vi || "",
+          };
+
+          console.log("aaaaaaaaaaa ", this.article);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    );
-
-    if (res.data.success) {
-      const item = res.data.data;
-
-      this.article = {
-        ...item,
-
-        // normalize language
-        title_ja: item.title_ja || item.title_jp || "",
-        desc_ja: item.desc_ja || item.desc_jp || "",
-
-        title_en: item.title_en || "",
-        desc_en: item.desc_en || "",
-
-        title_vi: item.title_vi || "",
-        desc_vi: item.desc_vi || "",
-      };
-
-      console.log("aaaaaaaaaaa ", this.article);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-},
+    },
 
     handleMenuClick(itemId) {
       this.$emit("update:activeTab", itemId);

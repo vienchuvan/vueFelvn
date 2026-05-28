@@ -21,7 +21,7 @@
         :src="
           banner.image || (banner.img?.startsWith('https')
             ? banner.img
-            : 'http://192.168.0.104:3000' + banner.img)
+            : 'https://miraivietnam.com' + banner.img)
         "
         :alt="banner.title"
         class="absolute inset-0 w-full h-full object-cover"
@@ -137,7 +137,7 @@ const getBanners = async () => {
         id: item.id,
         image: item.img?.startsWith('https')
           ? item.img
-          : 'http://192.168.0.104:3000' + item.img,
+          : 'https://miraivietnam.com' + item.img,
         img: item.img,
         title_vi: item.title_vi,
         title_en: item.title_en,

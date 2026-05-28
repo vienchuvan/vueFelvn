@@ -192,7 +192,7 @@ export default {
       }
 
       // ảnh local server
-      return "http://192.168.0.104:3000" + img;
+      return "https://miraivietnam.com" + img;
     },
   },
 };

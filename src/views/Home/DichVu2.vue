@@ -125,7 +125,7 @@
       </div>
     </main>
   </div>
-
+  <FloattingZalo />
   <FooterWeb />
 </template>
 
@@ -135,7 +135,9 @@ import "aos/dist/aos.css";
 
 import FooterWeb from "@/views/Home/FooterWeb.vue";
 import RightMenu from "@/views/Home/RightMenu.vue";
+import FloattingZalo from "@/views/Home/FloattingZalo.vue";
 import TopNav from "@/views/Home/TopNav.vue";
+
 
 import {
   Globe,
@@ -153,6 +155,7 @@ export default {
     TopNav,
     RightMenu,
     FooterWeb,
+    FloattingZalo,
   },
 
   props: {
