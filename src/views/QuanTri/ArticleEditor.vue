@@ -320,7 +320,6 @@ export default {
     mounted() {
         // Gán category từ prop khi component mount
         this.form.cate = this.category
-        console.log("this.form.cate ", this.form.cate);
         this.$nextTick(() => {
             this.initCKEditor()
         })
@@ -355,12 +354,10 @@ export default {
         category: {
             handler(newCategory) {
                 // Update category khi menu thay đổi
-                console.log("Category prop received:", this.category);
-                console.log("Category watcher triggered:", newCategory);
+       
                 if (!this.article) {
                     const catValue = newCategory || this.category || 'service'
                     this.form.cate = catValue
-                    console.log("Updated form.cate to:", this.form.cate);
                 }
             },
             immediate: true  // Gọi ngay khi component khởi tạo
@@ -379,7 +376,6 @@ export default {
     },
     methods: {
         loadArticleData(article) {
-            console.log("Loading article data:", article)
             if (!article) return
 
             this.form = {
@@ -616,7 +612,6 @@ export default {
                     slug: this.form.slug
                 }
 
-                console.log("PAYLOAD:", payload)
 
                 const response = await fetch(
                     'https://miraivietnam.com/api/quantri/baiviet',
@@ -631,7 +626,6 @@ export default {
 
                 const data = await response.json()
 
-                console.log("RESPONSE:", data)
 
                 if (!response.ok) {
                     throw new Error(

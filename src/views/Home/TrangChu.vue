@@ -330,11 +330,12 @@
         </aside>
       </div>
     </main>
-    <FloattingZalo />
+
     <FooterWeb />
   </div>
 </template>
 
+```vue
 <script>
 import axios from "axios";
 import AOS from "aos";
@@ -344,7 +345,6 @@ import RightMenu from "./RightMenu.vue";
 import BannerHome from "./BannerHome.vue";
 import TopNav from "./TopNav.vue";
 import FooterWeb from "./FooterWeb.vue";
-import FloattingZalo from "./FloattingZalo.vue";
 
 export default {
   name: "TrangChu",
@@ -354,7 +354,6 @@ export default {
     TopNav,
     RightMenu,
     FooterWeb,
-    FloattingZalo,
   },
 
   props: {
@@ -371,7 +370,8 @@ export default {
 
   data() {
     return {
-      currentLang: this.lang,
+      // FIX LANGUAGE
+      currentLang: this.getLangKey(this.lang),
 
       article: null,
 
@@ -387,6 +387,13 @@ export default {
         visa: [],
       },
     };
+  },
+
+  // FIX AUTO UPDATE LANGUAGE
+  watch: {
+    lang(newLang) {
+      this.currentLang = this.getLangKey(newLang);
+    },
   },
 
   computed: {
@@ -422,16 +429,21 @@ export default {
   },
 
   methods: {
+    // FIX LANG
     getLangKey(lang) {
-      if (lang === "jp") return "ja";
-      return lang;
+      if (!lang) return "vi";
+
+      const lower = String(lang).toLowerCase();
+
+      if (lower === "jp") return "ja";
+
+      return lower;
     },
 
     getTitle(item) {
       if (!item) return "";
 
       const lang = this.getLangKey(this.currentLang);
-      console.log("lang ", lang, item);
 
       return item[`title_${lang}`] || item.title_vi || "";
     },
@@ -446,22 +458,27 @@ export default {
 
     handleLanguageChange(newLang) {
       this.currentLang = this.getLangKey(newLang);
+
+      this.$emit("update:lang", this.currentLang);
     },
 
     async fetchArticles(cate = "service") {
       try {
-        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
-          method: "POST",
+        const response = await fetch(
+          "https://miraivietnam.com/api/quantri/baiviet",
+          {
+            method: "POST",
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+            headers: {
+              "Content-Type": "application/json",
+            },
 
-          body: JSON.stringify({
-            idFun: 114,
-            cate,
-          }),
-        });
+            body: JSON.stringify({
+              idFun: 114,
+              cate,
+            }),
+          }
+        );
 
         const data = await response.json();
 
@@ -487,7 +504,7 @@ export default {
 
           image: item.thumbnail?.startsWith("https")
             ? item.thumbnail
-            : "https://miraivietnam.com" + item.thumbnail,
+            : "https://miraivietnam.com/" + item.thumbnail,
 
           slug: item.slug,
         }));
@@ -498,18 +515,21 @@ export default {
 
     async fetchArticlesNews(cate = "news") {
       try {
-        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
-          method: "POST",
+        const response = await fetch(
+          "https://miraivietnam.com/api/quantri/baiviet",
+          {
+            method: "POST",
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+            headers: {
+              "Content-Type": "application/json",
+            },
 
-          body: JSON.stringify({
-            idFun: 114,
-            cate,
-          }),
-        });
+            body: JSON.stringify({
+              idFun: 114,
+              cate,
+            }),
+          }
+        );
 
         const data = await response.json();
 
@@ -528,7 +548,7 @@ export default {
 
           image: item.thumbnail?.startsWith("https")
             ? item.thumbnail
-            : "https://miraivietnam.com" + item.thumbnail,
+            : "https://miraivietnam.com/" + item.thumbnail,
 
           slug: item.slug,
         }));
@@ -539,11 +559,14 @@ export default {
 
     async fetchSidebarMenu() {
       try {
-        const res = await axios.get("https://miraivietnam.com/api/sidebar-menu", {
-          params: {
-            idFun: 114,
-          },
-        });
+        const res = await axios.get(
+          "https://miraivietnam.com/api/sidebar-menu",
+          {
+            params: {
+              idFun: 114,
+            },
+          }
+        );
 
         if (res.data.success) {
           this.sidebarMenu = res.data.data;
@@ -566,9 +589,13 @@ export default {
         const categoryName = String(category.category).toLowerCase();
 
         category.items?.forEach((item) => {
-          const subItemTitles = item.subItems?.map((sub) => sub.title) || [];
+          const subItemTitles =
+            item.subItems?.map((sub) => sub.title) || [];
 
-          if (categoryName.includes("đầu tư") || categoryName.includes("investment")) {
+          if (
+            categoryName.includes("đầu tư") ||
+            categoryName.includes("investment")
+          ) {
             this.subServices.investment.push(...subItemTitles);
           } else if (
             categoryName.includes("doanh nghiệp") ||
@@ -584,10 +611,13 @@ export default {
 
     async fetchArticle() {
       try {
-        const res = await axios.post("https://miraivietnam.com/api/quantri/baiviet", {
-          idFun: 115,
-          slug: "gioi-thieu",
-        });
+        const res = await axios.post(
+          "https://miraivietnam.com/api/quantri/baiviet",
+          {
+            idFun: 115,
+            slug: "ve-le-viet-nam",
+          }
+        );
 
         if (res.data.success) {
           const item = res.data.data;
@@ -595,7 +625,6 @@ export default {
           this.article = {
             ...item,
 
-            // normalize language
             title_ja: item.title_ja || item.title_jp || "",
             desc_ja: item.desc_ja || item.desc_jp || "",
 
@@ -605,8 +634,6 @@ export default {
             title_vi: item.title_vi || "",
             desc_vi: item.desc_vi || "",
           };
-
-          console.log("aaaaaaaaaaa ", this.article);
         }
       } catch (error) {
         console.log(error);
@@ -636,6 +663,8 @@ export default {
   },
 };
 </script>
+```
+
 
 <style scoped>
 main {
