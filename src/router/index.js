@@ -27,15 +27,15 @@ const routes = [
     {path: '/tin-tuc', name: 'NewsOverview', component: () => import('@/views/Home/TinTuc.vue')},
       {path: '/lien-he', name: 'ContactSection', component: () => import('@/views/Home/LienHe.vue')},
       {path: '/test', name: 'HomePage', component: () => import('@/views/Home/test.vue')},
-  {
-    path: '/:slug',
-    name: 'BaiVietChiTietTheoMenu',
-    component: ChiTietBaiViet
-  },
+  // {
+  //       path: '/:slug',
+  //   name: 'BaiVietChiTietTheoMenu',
+  //   component: ChiTietBaiViet
+  // },
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/'),
   routes
 })
 

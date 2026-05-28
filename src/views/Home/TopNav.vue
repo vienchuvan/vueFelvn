@@ -289,15 +289,19 @@ export default {
         );
 
         if (res.data.success) {
-          this.menuItems = res.data.data.map((item) => ({
-            ...item,
+          console.log("Menu data:", res.data.data);
+        this.menuItems = res.data.data.map((item) => ({
+  ...item,
 
-            link:
-              item.link ||
-              (item.id === "home"
-                ? "/"
-                : `/${item.id}`),
-          }));
+  link:
+    item.link === "/" || item.link === ""
+      ? "/"
+      : ["tin-tuc", "dich-vu", "lien-he"].includes(
+          item.link.replace("/", "")
+        )
+      ? item.link
+      : `/bai-viet${item.link}`,
+}));
         }
       } catch (error) {
         console.log(error);
