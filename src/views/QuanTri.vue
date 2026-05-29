@@ -18,7 +18,7 @@
           <div
             class="inline-block bg-[#0a203f] text-white font-black px-4 py-2 rounded-lg text-2xl tracking-widest mb-4"
           >
-            LE VIET NAM
+           MIRAI VIET NAM
           </div>
 
           <h1 class="text-xl font-bold text-gray-800">Đăng Nhập CMS</h1>
@@ -73,8 +73,8 @@
           class="h-16 flex items-center justify-center border-b border-white/10 shrink-0"
         >
           <span class="text-white font-black tracking-widest text-xl">
-            LE VIET NAM
-            <span class="text-orange-500">CMS</span>
+            MIRAI VIET NAM
+            <!-- <span class="text-orange-500">CMS</span> -->
           </span>
         </div>
 
