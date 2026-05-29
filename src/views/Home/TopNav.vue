@@ -18,7 +18,11 @@
           class="flex cursor-pointer items-center transition-transform duration-300 hover:scale-105"
           @click="$router.push('/')"
         >
-          <LogoSVG />
+          <img
+            src="@/assets/miraivietnam.png"
+            alt="Mirai Vietnam"
+            class="ml-2 h-12 w-auto object-contain"  >
+
         </div>
 
         <!-- DESKTOP -->
@@ -169,7 +173,7 @@ import {
   Globe,
 } from "lucide-vue-next";
 
-import LogoSVG from "@/components/LogoSVG.vue";
+// import LogoSVG from "@/components/LogoSVG.vue";
 
 export default {
   name: "TopNav",
@@ -178,7 +182,7 @@ export default {
     Menu,
     X,
     Globe,
-    LogoSVG,
+    
   },
 
   props: {

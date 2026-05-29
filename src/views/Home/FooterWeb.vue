@@ -8,7 +8,7 @@
       <div class="space-y-4">
         <div class="flex items-center space-x-3">
           <!-- LOGO -->
-      <div
+      <!-- <div
   v-if="settings.logo"
   class="h-12 max-w-[180px] [&>svg]:w-full [&>svg]:h-full"
   v-html="settings.logo"
@@ -19,15 +19,24 @@
   class="bg-brand-orange w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white text-xl"
 >
   LV
-</div>
+</div> -->
+   <div
+          class="flex cursor-pointer items-center transition-transform duration-300 hover:scale-105"
+          @click="$router.push('/')"
+        >
+          <img
+            src="@/assets/miraivietnam.png"
+            alt="Mirai Vietnam"
+            class="ml-2 h-12 w-auto object-contain"  >
 
+        </div>
           <span class="font-extrabold text-lg text-white uppercase">
             {{ currentLang.companyName || "LE VIET NAM" }}
           </span>
         </div>
 
         <p
-          class="text-gray-400 text-sm leading-relaxed"
+          class="text-gray-400 text-sm leading-relaxed text-left" 
           v-html="currentLang.footerContent"
         ></p>
       </div>
@@ -40,7 +49,7 @@
           Liên hệ
         </h4>
 
-        <ul class="space-y-3 text-gray-400 text-sm">
+        <ul class="space-y-3 text-gray-400 text-sm text-left" >
           <li class="flex">
             <i
               class="fa-solid fa-location-dot mr-2 text-brand-orange mt-1"
@@ -85,7 +94,7 @@
           Theo dõi chúng tôi
         </h4>
 
-        <div class="flex space-x-4">
+        <div class="flex space-x-4" style="justify-content: center;">
           <a
             href="#"
             class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition"
