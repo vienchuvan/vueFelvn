@@ -63,14 +63,17 @@
               class="w-full h-[204px] border-2 border-dashed border-gray-300 rounded-xl overflow-hidden bg-gray-50 relative flex items-center justify-center"
             >
               <img
-                v-if="formData.logoImagePreview"
-                :src="formData.logoImagePreview"
-                class="w-full h-full object-contain p-4"
-              />
+  v-if="formData.imgLogoPreview"
+  :src="formData.imgLogoPreview"
+  class="w-full h-full object-contain p-4"
+/>
 
-              <div v-else class="text-gray-400 text-sm">
-                Chọn ảnh logo...
-              </div>
+<div
+  v-else
+  class="text-gray-400 text-sm"
+>
+  Chọn ảnh logo...
+</div>
 
               <input
                 type="file"
@@ -95,7 +98,7 @@
           </div>
         </div>
 
-        <!-- RIGHT -->
+        <!-- RurlIgHT -->
         <div class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1 text-left">
@@ -214,7 +217,7 @@
           </label>
 
           <input
-            v-model="formData.socials.facebook"
+            v-model="formData.urlFacebook"
             type="text"
             placeholder="https://facebook.com/..."
             class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-500"
@@ -223,13 +226,13 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1 text-left">
-            Zalo
+            urlZalo
           </label>
 
           <input
-            v-model="formData.socials.zalo"
+            v-model="formData.urlZalo"
             type="text"
-            placeholder="https://zalo.me/..."
+            placeholder="https://urlZalo.me/..."
             class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-500"
           />
         </div>
@@ -240,7 +243,7 @@
           </label>
 
           <input
-            v-model="formData.socials.youtube"
+            v-model="formData.urlYoutube"
             type="text"
             placeholder="https://youtube.com/..."
             class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-500"
@@ -249,13 +252,13 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1 text-left">
-            TikTok
+            urlTiktok
           </label>
 
           <input
-            v-model="formData.socials.tiktok"
+            v-model="formData.urlTiktok"
             type="text"
-            placeholder="https://tiktok.com/..."
+            placeholder="https://urlTiktok.com/..."
             class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-500"
           />
         </div>
@@ -266,7 +269,7 @@
           </label>
 
           <input
-            v-model="formData.socials.instagram"
+            v-model="formData.urlIg"
             type="text"
             placeholder="https://instagram.com/..."
             class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-500"
@@ -275,13 +278,13 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1 text-left">
-            Linkedin
+            urlLinkedin
           </label>
 
           <input
-            v-model="formData.socials.linkedin"
+            v-model="formData.urlLinkedin"
             type="text"
-            placeholder="https://linkedin.com/..."
+            placeholder="https://urlLinkedin.com/..."
             class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-blue-500"
           />
         </div>
@@ -382,61 +385,61 @@ export default {
   },
 
   data() {
-    return {
-      activeLang: "vi",
+  return {
+    activeLang: "vi",
 
-      logoTab: "image",
+    logoTab: "image",
 
-      langs: [
-        { value: "vi", label: "🇻🇳 Tiếng Việt" },
-        { value: "en", label: "🇬🇧 English" },
-        { value: "ja", label: "🇯🇵 日本語" },
-      ],
+    langs: [
+      { value: "vi", label: "🇻🇳 Tiếng Việt" },
+      { value: "en", label: "🇬🇧 English" },
+      { value: "ja", label: "🇯🇵 日本語" },
+    ],
 
-      formData: {
-        logo: "",
+    formData: {
+      logo: "",
 
-        logoImage: "",
-        logoImageFile: null,
-        logoImagePreview: "",
+      // upload image
+      imgLogo: "",
+      imgLogoFile: null,
+      imgLogoPreview: "",
 
-        hotline: "",
-        email: "",
-        workingHours: "",
+      hotline: "",
+      email: "",
+      workingHours: "",
 
-        socials: {
-          facebook: "",
-          zalo: "",
-          youtube: "",
-          tiktok: "",
-          instagram: "",
-          linkedin: "",
+      // socials
+      urlFacebook: "",
+      urlYoutube: "",
+      urlZalo: "",
+      urlTiktok: "",
+      urlIg: "",
+      urlLinkedin: "",
+
+      languages: {
+        vi: {
+          companyName: "",
+          address: "",
+          footerContent: "",
         },
 
-        languages: {
-          vi: {
-            companyName: "",
-            address: "",
-            footerContent: "",
-          },
-
-          en: {
-            companyName: "",
-            address: "",
-            footerContent: "",
-          },
-
-          ja: {
-            companyName: "",
-            address: "",
-            footerContent: "",
-          },
+        en: {
+          companyName: "",
+          address: "",
+          footerContent: "",
         },
 
-        banners: [],
+        ja: {
+          companyName: "",
+          address: "",
+          footerContent: "",
+        },
       },
-    };
-  },
+
+      banners: [],
+    },
+  };
+},
 
   mounted() {
     this.getSettings();
@@ -447,123 +450,199 @@ export default {
     // =========================
     // GET SETTINGS
     // =========================
-    async getSettings() {
-      try {
-        const res = await axios.post(
-          "https://miraivietnam.com/api/setting-home",
-          {
-            idFun: 100,
-          }
-        );
-
-        if (res.data.success) {
-          this.formData = {
-            ...this.formData,
-            ...res.data.data,
-          };
-
-          // socials default
-          this.formData.socials = {
-            facebook: "",
-            zalo: "",
-            youtube: "",
-            tiktok: "",
-            instagram: "",
-            linkedin: "",
-            ...(res.data.data.socials || {}),
-          };
-
-          // preview image
-          if (res.data.data.logoImage) {
-            this.formData.logoImagePreview =
-              res.data.data.logoImage.startsWith("https")
-                ? res.data.data.logoImage
-                : "https://miraivietnam.com/" +
-                  res.data.data.logoImage;
-          }
-        }
-      } catch (error) {
-        console.log(error);
+  async getSettings() {
+  try {
+    const res = await axios.post(
+      // "https://miraivietnam.com/api/setting-home",
+       "http://localhost:3000/api/setting-home",
+      {
+        idFun: 100,
       }
-    },
+    );
 
-    // =========================
-    // CHANGE LOGO IMAGE
-    // =========================
-    changeLogoImage(event) {
-      const file = event.target.files[0];
+    if (res.data.success) {
+      const data = res.data.data || {};
 
-      if (!file) return;
+      this.formData.logo =
+        data.logo || "";
 
-      this.formData.logoImageFile = file;
+      this.formData.imgLogo =
+        data.imgLogo || "";
 
-      this.formData.logoImagePreview =
-        URL.createObjectURL(file);
-    },
+      this.formData.hotline =
+        data.hotline || "";
 
-    // =========================
-    // SAVE SETTINGS
-    // =========================
-    async saveSettings() {
-      try {
-        const formData = new FormData();
+      this.formData.email =
+        data.email || "";
 
-        formData.append("idFun", 200);
+      this.formData.workingHours =
+        data.workingHours || "";
 
-        formData.append("logo", this.formData.logo);
+      this.formData.urlFacebook =
+        data.urlFacebook || "";
 
-        if (this.formData.logoImageFile) {
-          formData.append(
-            "logo_image",
-            this.formData.logoImageFile
-          );
-        }
+      this.formData.urlYoutube =
+        data.urlYoutube || "";
 
-        formData.append(
-          "hotline",
-          this.formData.hotline
-        );
+      this.formData.urlZalo =
+        data.urlZalo || "";
 
-        formData.append(
-          "email",
-          this.formData.email
-        );
+      this.formData.urlTiktok =
+        data.urlTiktok || "";
 
-        formData.append(
-          "workingHours",
-          this.formData.workingHours
-        );
+      this.formData.urlIg =
+        data.urlIg || "";
 
-        formData.append(
-          "languages",
-          JSON.stringify(this.formData.languages)
-        );
+      this.formData.urlLinkedin =
+        data.urlLinkedin || "";
 
-        formData.append(
-          "socials",
-          JSON.stringify(this.formData.socials)
-        );
+      this.formData.languages =
+        data.languages ||
+        this.formData.languages;
 
-        const res = await axios.post(
-          "https://miraivietnam.com/api/setting-home",
-          formData,
-          {
-            headers: {
-              "Content-Type":
-                "multipart/form-data",
-            },
-          }
-        );
-
-        if (res.data.success) {
-          alert("Lưu cài đặt thành công");
-        }
-      } catch (error) {
-        console.log(error);
-
-        alert("Có lỗi xảy ra");
+      if (data.imgLogo) {
+        this.formData.imgLogoPreview =
+          data.imgLogo.startsWith("http")
+            ? data.imgLogo
+            : "https://miraivietnam.com" +
+              data.imgLogo;
       }
-    },
+    }
+  } catch (error) {
+    console.log(error);
+  }
+},
+
+
+changeLogoImage(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  this.formData.imgLogoFile = file;
+
+  const reader = new FileReader();
+
+  reader.onload = e => {
+    this.formData.imgLogoPreview =
+      e.target.result;
+  };
+
+  reader.readAsDataURL(file);
+
+  console.log(
+    "preview:",
+    this.formData.imgLogoPreview
+  );
+},
+
+async saveSettings() {
+  try {
+    const formData = new FormData();
+
+    formData.append("idFun", 200);
+
+    // svg logo
+    formData.append(
+      "logo",
+      this.formData.logo || ""
+    );
+
+    // image logo
+    if (this.formData.imgLogoFile) {
+      formData.append(
+        "imgLogo",
+        this.formData.imgLogoFile
+      );
+    }
+
+    // contact
+    formData.append(
+      "hotline",
+      this.formData.hotline || ""
+    );
+
+    formData.append(
+      "email",
+      this.formData.email || ""
+    );
+
+    formData.append(
+      "workingHours",
+      this.formData.workingHours || ""
+    );
+
+    // socials
+    formData.append(
+      "urlFacebook",
+      this.formData.urlFacebook || ""
+    );
+
+    formData.append(
+      "urlYoutube",
+      this.formData.urlYoutube || ""
+    );
+
+    formData.append(
+      "urlZalo",
+      this.formData.urlZalo || ""
+    );
+
+    formData.append(
+      "urlTiktok",
+      this.formData.urlTiktok || ""
+    );
+
+    formData.append(
+      "urlIg",
+      this.formData.urlIg || ""
+    );
+
+    formData.append(
+      "urlLinkedin",
+      this.formData.urlLinkedin || ""
+    );
+
+    // language
+    formData.append(
+      "languages",
+      JSON.stringify(
+        this.formData.languages
+      )
+    );
+//  "https://miraivietnam.com/api/setting-home",  
+    const res = await axios.post(
+     
+      "http://localhost:3000/api/setting-home",
+      formData,
+      {
+        headers: {
+          "Content-Type":
+            "multipart/form-data",
+        },
+      }
+    );
+
+    if (res.data.success) {
+      alert(
+        "Lưu cài đặt thành công"
+      );
+
+      if (res.data.imgLogo) {
+        this.formData.imgLogo =
+          res.data.imgLogo;
+
+        this.formData.imgLogoPreview =
+          "https://miraivietnam.com" +
+          res.data.imgLogo;
+      }
+    }
+  } catch (error) {
+    console.log(error);
+
+    alert("Có lỗi xảy ra");
+  }
+},
 
     // =========================
     // GET BANNERS

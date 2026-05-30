@@ -96,21 +96,21 @@
 
         <div class="flex space-x-4" style="justify-content: center;">
           <a
-            href="#"
+            :href="settings.urlFacebook || '#'"
             class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition"
           >
             <i class="fa-brands fa-facebook-f"></i>
           </a>
 
           <a
-            href="#"
+            :href="settings.urlLinkedIn || '#'"
             class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition"
           >
             <i class="fa-brands fa-linkedin-in"></i>
           </a>
 
           <a
-            href="#"
+            :href="settings.urlYouTube || '#'"
             class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition"
           >
             <i class="fa-brands fa-youtube"></i>

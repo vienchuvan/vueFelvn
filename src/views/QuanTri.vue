@@ -72,10 +72,12 @@
         <div
           class="h-16 flex items-center justify-center border-b border-white/10 shrink-0"
         >
+        <a href="/"> 
           <span class="text-white font-black tracking-widest text-xl">
             MIRAI VIET NAM
             <!-- <span class="text-orange-500">CMS</span> -->
           </span>
+          </a>
         </div>
 
         <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">

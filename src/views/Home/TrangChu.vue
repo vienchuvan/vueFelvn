@@ -330,12 +330,11 @@
         </aside>
       </div>
     </main>
-
+<FloatingZalo> </FloatingZalo>
     <FooterWeb />
   </div>
 </template>
 
-```vue
 <script>
 import axios from "axios";
 import AOS from "aos";
@@ -345,7 +344,7 @@ import RightMenu from "./RightMenu.vue";
 import BannerHome from "./BannerHome.vue";
 import TopNav from "./TopNav.vue";
 import FooterWeb from "./FooterWeb.vue";
-
+import FloatingZalo from "./FloattingZalo.vue";
 export default {
   name: "TrangChu",
 
@@ -354,6 +353,7 @@ export default {
     TopNav,
     RightMenu,
     FooterWeb,
+    FloatingZalo,
   },
 
   props: {
