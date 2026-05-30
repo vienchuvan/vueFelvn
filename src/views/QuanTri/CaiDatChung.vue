@@ -454,7 +454,7 @@ export default {
   try {
     const res = await axios.post(
       // "https://miraivietnam.com/api/setting-home",
-       "http://localhost:3000/api/setting-home",
+       "https://miraivietnam.com/api/setting-home",
       {
         idFun: 100,
       }
@@ -613,7 +613,7 @@ async saveSettings() {
 //  "https://miraivietnam.com/api/setting-home",  
     const res = await axios.post(
      
-      "http://localhost:3000/api/setting-home",
+      "https://miraivietnam.com/api/setting-home",
       formData,
       {
         headers: {
