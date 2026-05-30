@@ -211,7 +211,6 @@ settings: {
         urlYouTube: "",
         imgLogo: "",
         urlZalo: "",
-        
         workingHours: "",
         languages: {
           vi: {},
@@ -406,7 +405,7 @@ settings: {
  getImage(img) {
       
       if (!img) {
-        return "@/assets/miraivietnam.png";
+        return "/img/miraivietnam.png";
       }
 
       // nếu đã là http hoặc https
