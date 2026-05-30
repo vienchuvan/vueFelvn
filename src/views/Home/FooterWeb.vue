@@ -25,7 +25,7 @@
           @click="$router.push('/')"
         >
           <img
-            src="@/assets/miraivietnam.png"
+            :src="getImage(settings.imgLogo)"
             alt="Mirai Vietnam"
             class="ml-2 h-12 w-auto object-contain"  >
 
@@ -188,8 +188,9 @@ export default {
     },
 
     getImage(img) {
+      
       if (!img) {
-        return "/default-logo.png";
+        return "@/assets/miraivietnam.png";
       }
 
       // nếu đã là http hoặc https

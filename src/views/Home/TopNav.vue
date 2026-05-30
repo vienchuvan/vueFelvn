@@ -19,7 +19,7 @@
           @click="$router.push('/')"
         >
           <img
-            src="@/assets/miraivietnam.png"
+            :src="getImage(settings.imgLogo)"
             alt="Mirai Vietnam"
             class="ml-2 h-12 w-auto object-contain"  >
 
@@ -202,7 +202,23 @@ export default {
   data() {
     return {
       mobileMenuOpen: false,
-
+settings: {
+        logo: "",
+        hotline: "",
+        email: "",
+        urlFacebook: "",
+        urlLinkedIn: "",
+        urlYouTube: "",
+        imgLogo: "",
+        urlZalo: "",
+        
+        workingHours: "",
+        languages: {
+          vi: {},
+          en: {},
+          ja: {},
+        },
+      },
       showLang: false,
 
       loading: false,
@@ -370,9 +386,50 @@ export default {
     handleScroll() {
       this.isScrolled = window.scrollY > 20;
     },
-  },
 
+    async getSettings() {
+      try {
+        const res = await axios.post(
+          "https://miraivietnam.com/api/setting-home",
+          {
+            idFun: 100,
+          }
+        );
+
+        if (res.data.success) {
+          this.settings = res.data.data;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+ getImage(img) {
+      
+      if (!img) {
+        return "@/assets/miraivietnam.png";
+      }
+
+      // nếu đã là http hoặc https
+      if (
+        img.startsWith("http://") ||
+        img.startsWith("https://")
+      ) {
+        return img;
+      }
+
+      // ảnh local server
+      return "https://miraivietnam.com" + img;
+    },
+  
+
+  },
+ currentLang() {
+      return (
+        this.settings.languages?.[this.lang] || {}
+      );
+    },
   mounted() {
+     this.getSettings();
     this.fetchMenuData();
 
     this.initLanguageCode();
