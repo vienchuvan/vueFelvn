@@ -59,7 +59,7 @@
             @click="$emit('setActiveTab', 'services')"
             class="bg-orange-500 hover:bg-orange-600 text-white text-[14px] font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30 flex items-center gap-2"
           >
-            Khám phá ngay
+            {{ getButtonText() }}
 
             <svg
               class="w-4 h-4"
@@ -117,12 +117,25 @@ const highlightedWords = ['Đầu', 'Tư', 'FDI', 'Đào', 'Tạo'];
 
 const getTitle = (banner) => {
   if (!banner) return '';
-  return banner[`title_${props.lang}`] || banner.title || '';
+    const lang = props.lang === 'ja' ? 'jp' : props.lang;
+  return banner[`title_${lang}`] || banner.title || '';
 };
 
 const getDescription = (banner) => {
   if (!banner) return '';
-  return banner[`desc_${props.lang}`] || banner.description || banner.desc || '';
+
+  const lang = props.lang === 'ja' ? 'jp' : props.lang;
+
+  return banner[`desc_${lang}`] || banner.description || banner.desc || '';
+};
+
+const getButtonText = () => {
+  const texts = {
+    vi: 'Khám phá ngay',
+    en: 'Discover Now',
+    ja: '今すぐ探索'
+  };
+  return texts[props.lang] || texts.vi;
 };
 
 // Fetch banners
@@ -141,11 +154,11 @@ const getBanners = async () => {
         img: item.img,
         title_vi: item.title_vi,
         title_en: item.title_en,
-        title_ja: item.title_ja,
+        title_jp: item.title_jp,
         title: item.title,
         desc_vi: item.desc_vi,
         desc_en: item.desc_en,
-        desc_ja: item.desc_ja,
+        desc_jp: item.desc_jp,
         description: item.desc,
         desc: item.desc,
       }));

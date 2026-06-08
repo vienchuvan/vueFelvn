@@ -26,20 +26,20 @@
               :key="itemIdx"
             >
               <!-- ITEM -->
-              <button
+              <a
+                :href="`/bai-viet/${getItemId(item)}`"
                 class="w-full flex items-start text-left p-2.5 rounded-lg hover:bg-indigo-900/50 transition-colors group"
               >
                 <i
                   class="fa-solid fa-chevron-right text-orange-500 text-[12px] mt-1 mr-2 shrink-0 group-hover:text-orange-400"
                 ></i>
 
-                <a
-                  :href="`/bai-viet/${getItemId(item)}`"
+                <span
                   class="text-gray-200 text-sm font-medium flex-1 group-hover:text-white transition-colors"
                 >
                   {{ getItemTitle(item) }}
-                </a>
-              </button>
+                </span>
+              </a>
 
               <!-- SUB -->
               <ul

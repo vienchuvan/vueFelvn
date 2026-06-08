@@ -1,16 +1,38 @@
 <template>
-  <router-view></router-view>
+  <router-view
+    :lang="lang"
+    @update:lang="lang = $event"
+  />
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      lang: localStorage.getItem("lang") || "vi",
+    };
+  },
+
+  watch: {
+    lang(val) {
+      localStorage.setItem("lang", val);
+    },
+  },
+};
+</script>
 
 <style>
 #app {
   font-family: "Be Vietnam Pro", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
-}
 
+}
+h2{
+  color: #fff !important;
+}
 body {
   font-family: "Be Vietnam Pro", sans-serif;
 }

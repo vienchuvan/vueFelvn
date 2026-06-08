@@ -133,7 +133,7 @@
       </div>
     </section>
   </div>
-  <FooterWeb />
+  <FooterWeb :subServices="subServices" :lang="currentLang" />
 </template>
 
 <script>

@@ -330,8 +330,8 @@
         </aside>
       </div>
     </main>
-<FloatingZalo> </FloatingZalo>
-    <FooterWeb />
+    <FloatingZalo> </FloatingZalo>
+    <FooterWeb :subServices="subServices" :lang="currentLang" />
   </div>
 </template>
 
@@ -448,13 +448,16 @@ export default {
       return item[`title_${lang}`] || item.title_vi || "";
     },
 
-    getDescription(item) {
-      if (!item) return "";
+   getDescription(item) {
+    console.log("Getting description for item:", item);
+  if (!item) return "";
 
-      const lang = this.getLangKey(this.currentLang);
-
-      return item[`desc_${lang}`] || item.desc_vi || "";
-    },
+  const lang = this.getLangKey(this.currentLang) === "ja"
+    ? "jp"
+    : this.getLangKey(this.currentLang);
+console.log("Trying to get description with key:", item[`desc_${lang}`]);
+  return item[`desc_${lang}`] || item.desc_vi || "";
+},
 
     handleLanguageChange(newLang) {
       this.currentLang = this.getLangKey(newLang);
@@ -464,21 +467,18 @@ export default {
 
     async fetchArticles(cate = "service") {
       try {
-        const response = await fetch(
-          "https://miraivietnam.com/api/quantri/baiviet",
-          {
-            method: "POST",
+        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
+          method: "POST",
 
-            headers: {
-              "Content-Type": "application/json",
-            },
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-            body: JSON.stringify({
-              idFun: 114,
-              cate,
-            }),
-          }
-        );
+          body: JSON.stringify({
+            idFun: 114,
+            cate,
+          }),
+        });
 
         const data = await response.json();
 
@@ -515,21 +515,18 @@ export default {
 
     async fetchArticlesNews(cate = "news") {
       try {
-        const response = await fetch(
-          "https://miraivietnam.com/api/quantri/baiviet",
-          {
-            method: "POST",
+        const response = await fetch("https://miraivietnam.com/api/quantri/baiviet", {
+          method: "POST",
 
-            headers: {
-              "Content-Type": "application/json",
-            },
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-            body: JSON.stringify({
-              idFun: 114,
-              cate,
-            }),
-          }
-        );
+          body: JSON.stringify({
+            idFun: 114,
+            cate,
+          }),
+        });
 
         const data = await response.json();
 
@@ -559,14 +556,11 @@ export default {
 
     async fetchSidebarMenu() {
       try {
-        const res = await axios.get(
-          "https://miraivietnam.com/api/sidebar-menu",
-          {
-            params: {
-              idFun: 114,
-            },
-          }
-        );
+        const res = await axios.get("https://miraivietnam.com/api/sidebar-menu", {
+          params: {
+            idFun: 114,
+          },
+        });
 
         if (res.data.success) {
           this.sidebarMenu = res.data.data;
@@ -589,13 +583,9 @@ export default {
         const categoryName = String(category.category).toLowerCase();
 
         category.items?.forEach((item) => {
-          const subItemTitles =
-            item.subItems?.map((sub) => sub.title) || [];
+          const subItemTitles = item.subItems?.map((sub) => sub.title) || [];
 
-          if (
-            categoryName.includes("đầu tư") ||
-            categoryName.includes("investment")
-          ) {
+          if (categoryName.includes("đầu tư") || categoryName.includes("investment")) {
             this.subServices.investment.push(...subItemTitles);
           } else if (
             categoryName.includes("doanh nghiệp") ||
@@ -611,13 +601,10 @@ export default {
 
     async fetchArticle() {
       try {
-        const res = await axios.post(
-          "https://miraivietnam.com/api/quantri/baiviet",
-          {
-            idFun: 115,
-            slug: "ve-le-viet-nam",
-          }
-        );
+        const res = await axios.post("https://miraivietnam.com/api/quantri/baiviet", {
+          idFun: 115,
+          slug: "gioi-thieu",
+        });
 
         if (res.data.success) {
           const item = res.data.data;
@@ -664,7 +651,6 @@ export default {
 };
 </script>
 ```
-
 
 <style scoped>
 main {

@@ -24,17 +24,17 @@
 
           </div>
           <span class="font-extrabold text-lg text-white uppercase">
-            {{ currentLang.companyName || "LE VIET NAM" }}
+            {{ currentLangData.companyName || "VIET NAM" }}
           </span>
         </div>
 
-        <p class="text-gray-400 text-sm leading-relaxed text-left" v-html="currentLang.footerContent"></p>
+        <p class="text-gray-400 text-sm leading-relaxed text-left" v-html="currentLangData.footerContent"></p>
       </div>
 
       <!-- Cột 2 -->
       <div class="space-y-4">
         <h4 class="font-bold text-white uppercase tracking-wider text-sm">
-          Liên hệ
+          {{ t('contactTitle') }}
         </h4>
 
         <ul class="space-y-3 text-gray-400 text-sm text-left">
@@ -42,7 +42,7 @@
             <i class="fa-solid fa-location-dot mr-2 text-brand-orange mt-1"></i>
 
             <span>
-              {{ currentLang.address || "Chưa cập nhật địa chỉ" }}
+              {{ currentLangData.address || "Chưa cập nhật địa chỉ" }}
             </span>
           </li>
 
@@ -69,7 +69,7 @@
       <!-- Cột 3 -->
       <div class="space-y-4">
         <h4 class="font-bold text-white uppercase tracking-wider text-sm">
-          Theo dõi chúng tôi
+          {{ t('followTitle') }}
         </h4>
 
         <div class="flex space-x-4" style="justify-content: center;">
@@ -94,8 +94,8 @@
     <!-- COPYRIGHT -->
     <div class="max-w-[1180px] mx-auto px-5 mt-12 pt-8 border-t border-white/5 text-center text-gray-500 text-xs">
       © 2026
-      {{ currentLang.companyName || "LE VIET NAM" }}.
-      Bảo lưu mọi quyền.
+      {{ currentLangData.companyName || "VIET NAM" }}.
+      {{ t('allRightsReserved') }}
     </div>
   </footer>
 </template>
@@ -113,6 +113,8 @@ export default {
 
   data() {
     return {
+      currentLang: this.lang || "vi",
+
       settings: {
         logo: "",
         hotline: "",
@@ -130,12 +132,36 @@ export default {
           ja: {},
         },
       },
+
+      translations: {
+        vi: {
+          contactTitle: "Liên hệ",
+          followTitle: "Theo dõi chúng tôi",
+          allRightsReserved: "Bảo lưu mọi quyền.",
+        },
+        en: {
+          contactTitle: "Contact",
+          followTitle: "Follow Us",
+          allRightsReserved: "All rights reserved.",
+        },
+        ja: {
+          contactTitle: "お問い合わせ",
+          followTitle: "フォローしてください",
+          allRightsReserved: "著作権所有。",
+        },
+      },
     };
   },
 
   computed: {
-    currentLang() {
-      return this.settings?.languages?.[this.lang] || {};
+    currentLangData() {
+      return this.settings?.languages?.[this.currentLang] || {};
+    },
+  },
+
+  watch: {
+    lang(newLang) {
+      this.currentLang = newLang;
     },
   },
 
@@ -144,6 +170,10 @@ export default {
   },
 
   methods: {
+    t(key) {
+      return this.translations[this.currentLang]?.[key] || this.translations.vi[key] || key;
+    },
+
     async getSettings() {
       try {
         const res = await axios.post(

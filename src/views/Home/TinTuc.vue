@@ -255,8 +255,9 @@
     </main>
 
   </div>
-   <FooterWeb />
+  
      <FloattingZalo />
+       <FooterWeb :subServices="subServices" :lang="currentLang" />
 </template>
 
 <script>

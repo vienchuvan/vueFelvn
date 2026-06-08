@@ -34,7 +34,7 @@
           <h3
             class="mb-5 text-[34px] font-black tracking-tight text-white md:text-[48px]"
           >
-            Kết Nối Với Chúng Tôi
+            {{ t('connectTitle') }}
           </h3>
         </div>
 
@@ -71,7 +71,7 @@
                     ></div>
 
                     <h2 class="text-[28px] font-black leading-[1.4]">
-                      Thông Tin Liên Hệ
+                      {{ t('contactInfo') }}
                     </h2>
                   </div>
 
@@ -93,7 +93,7 @@
                         <p
                           class="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-white/50"
                         >
-                          Trụ sở chính
+                          {{ t('headquarters') }}
                         </p>
 
                         <p class="text-[14px] font-bold leading-[1.9] text-white">
@@ -118,7 +118,7 @@
                         <p
                           class="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-white/50"
                         >
-                          Hotline tư vấn
+                          {{ t('hotlineLabel') }}
                         </p>
 
                         <p class="text-[20px] font-black text-white">
@@ -141,7 +141,7 @@
                         <p
                           class="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-white/50"
                         >
-                          Email hỗ trợ
+                          {{ t('emailLabel') }}
                         </p>
 
                         <p class="break-all text-[14px] font-bold text-white">
@@ -159,7 +159,7 @@
                       <p
                         class="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-white/50"
                       >
-                        Giờ làm việc
+                        {{ t('workingHoursLabel') }}
                       </p>
 
                       <p class="text-[14px] font-bold leading-[1.8] text-white">
@@ -193,11 +193,11 @@
                 <!-- TITLE -->
                 <div class="mb-8">
                   <h2 class="mb-3 text-[30px] font-black text-[#1D225C]">
-                    Gửi Yêu Cầu Tư Vấn
+                    {{ t('formTitle') }}
                   </h2>
 
                   <p class="text-[14px] leading-[1.9] text-[#6B7280]">
-                    Điền thông tin bên dưới, đội ngũ chuyên gia sẽ liên hệ hỗ trợ bạn.
+                    {{ t('formDesc') }}
                   </p>
                 </div>
 
@@ -208,7 +208,7 @@
                     <!-- NAME -->
                     <div>
                       <label class="mb-2 block text-[13px] font-black text-[#1D225C]">
-                        Họ và tên
+                        {{ t('nameLabel') }}
                       </label>
 
                       <div class="input-wrap">
@@ -217,7 +217,7 @@
                         <input
                           v-model="form.name"
                           type="text"
-                          placeholder="VD: Nguyễn Văn A"
+                          :placeholder="t('namePlaceholder')"
                           class="modern-input"
                         />
                       </div>
@@ -226,7 +226,7 @@
                     <!-- PHONE -->
                     <div>
                       <label class="mb-2 block text-[13px] font-black text-[#1D225C]">
-                        Số điện thoại
+                        {{ t('phoneLabel') }}
                       </label>
 
                       <div class="input-wrap">
@@ -235,7 +235,7 @@
                         <input
                           v-model="form.phone"
                           type="text"
-                          placeholder="VD: 0901234567"
+                          :placeholder="t('phonePlaceholder')"
                           class="modern-input"
                         />
                       </div>
@@ -245,14 +245,14 @@
                   <!-- SERVICE -->
                   <div>
                     <label class="mb-2 block text-[13px] font-black text-[#1D225C]">
-                      Dịch vụ quan tâm
+                      {{ t('serviceLabel') }}
                     </label>
 
                     <div class="input-wrap">
                       <i class="fa-solid fa-briefcase"></i>
 
                       <select v-model="form.service" class="modern-input">
-                        <option value="">-- Vui lòng chọn dịch vụ --</option>
+                        <option value="">{{ t('selectService') }}</option>
 
                         <option>Thành lập doanh nghiệp</option>
 
@@ -268,13 +268,13 @@
                   <!-- MESSAGE -->
                   <div>
                     <label class="mb-2 block text-[13px] font-black text-[#1D225C]">
-                      Nội dung chi tiết
+                      {{ t('messageLabel') }}
                     </label>
 
                     <textarea
                       v-model="form.note"
                       rows="5"
-                      placeholder="Mô tả cụ thể vấn đề bạn cần hỗ trợ..."
+                      :placeholder="t('messagePlaceholder')"
                       class="modern-textarea"
                     ></textarea>
                   </div>
@@ -282,7 +282,7 @@
                   <!-- BUTTON -->
                   <button type="submit" :disabled="loading" class="submit-btn group">
                     <span>
-                      {{ loading ? "Đang gửi..." : "Gửi Yêu Cầu Tư Vấn" }}
+                      {{ loading ? t('sending') : t('sendBtn') }}
                     </span>
 
                     <i
@@ -300,10 +300,8 @@
             <div
               class="overflow-hidden rounded-[22px] border border-white/10 bg-[#082C5C]/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
             >
-              <RightMenu
-                :activeTab="activeTab"
-                @update:activeTab="$emit('update:activeTab', $event)"
-              />
+                          <RightMenu :subServices="subServices" :lang="currentLang" />
+
             </div>
 
             <!-- SUPPORT -->
@@ -313,7 +311,7 @@
     </section>
   </div>
   <FloattingZalo />
-  <FooterWeb />
+  <FooterWeb :subServices="subServices" :lang="currentLang" />
 </template>
 
 <script>
@@ -346,6 +344,8 @@ export default {
 
   data() {
     return {
+      currentLang: this.lang || "vi",
+
       settings: {
         logo: "",
         hotline: "",
@@ -370,12 +370,93 @@ export default {
         service: "",
         note: "",
       },
+
+      translations: {
+        vi: {
+          connectTitle: "Kết Nối Với Chúng Tôi",
+          contactInfo: "Thông Tin Liên Hệ",
+          headquarters: "Trụ sở chính",
+          hotlineLabel: "Hotline tư vấn",
+          emailLabel: "Email hỗ trợ",
+          workingHoursLabel: "Giờ làm việc",
+          formTitle: "Gửi Yêu Cầu Tư Vấn",
+          formDesc: "Điền thông tin bên dưới, đội ngũ chuyên gia sẽ liên hệ hỗ trợ bạn.",
+          nameLabel: "Họ và tên",
+          namePlaceholder: "VD: Nguyễn Văn A",
+          phoneLabel: "Số điện thoại",
+          phonePlaceholder: "VD: 0901234567",
+          serviceLabel: "Dịch vụ quan tâm",
+          selectService: "-- Vui lòng chọn dịch vụ --",
+          messageLabel: "Nội dung chi tiết",
+          messagePlaceholder: "Mô tả cụ thể vấn đề bạn cần hỗ trợ...",
+          sendBtn: "Gửi Yêu Cầu Tư Vấn",
+          sending: "Đang gửi...",
+          successMessage: "Gửi yêu cầu tư vấn thành công!",
+          errorName: "Vui lòng nhập họ tên",
+          errorPhone: "Vui lòng nhập số điện thoại",
+          errorSending: "Không thể gửi yêu cầu",
+        },
+        en: {
+          connectTitle: "Connect With Us",
+          contactInfo: "Contact Information",
+          headquarters: "Headquarters",
+          hotlineLabel: "Hotline",
+          emailLabel: "Email Support",
+          workingHoursLabel: "Working Hours",
+          formTitle: "Send Consultation Request",
+          formDesc: "Fill in the information below, our expert team will contact you for support.",
+          nameLabel: "Full Name",
+          namePlaceholder: "Example: John Doe",
+          phoneLabel: "Phone Number",
+          phonePlaceholder: "Example: 0901234567",
+          serviceLabel: "Service of Interest",
+          selectService: "-- Please select a service --",
+          messageLabel: "Detailed Content",
+          messagePlaceholder: "Describe the specific issue you need support with...",
+          sendBtn: "Send Consultation Request",
+          sending: "Sending...",
+          successMessage: "Consultation request sent successfully!",
+          errorName: "Please enter your full name",
+          errorPhone: "Please enter your phone number",
+          errorSending: "Unable to send request",
+        },
+        ja: {
+          connectTitle: "お問い合わせ",
+          contactInfo: "お問い合わせ情報",
+          headquarters: "本社",
+          hotlineLabel: "ホットライン",
+          emailLabel: "メールサポート",
+          workingHoursLabel: "営業時間",
+          formTitle: "コンサルティングリクエストを送信",
+          formDesc: "以下の情報を記入してください。専門家チームがサポートのためご連絡いたします。",
+          nameLabel: "お名前",
+          namePlaceholder: "例：山田太郎",
+          phoneLabel: "電話番号",
+          phonePlaceholder: "例：0901234567",
+          serviceLabel: "興味のあるサービス",
+          selectService: "-- サービスを選択してください --",
+          messageLabel: "詳細内容",
+          messagePlaceholder: "サポートが必要な具体的な問題を説明してください...",
+          sendBtn: "コンサルティングリクエストを送信",
+          sending: "送信中...",
+          successMessage: "コンサルティングリクエストが正常に送信されました!",
+          errorName: "お名前を入力してください",
+          errorPhone: "電話番号を入力してください",
+          errorSending: "リクエストを送信できません",
+        },
+      },
     };
   },
 
-  computed: {
-    currentLang() {
-      return this.settings.languages?.[this.lang] || {};
+  // computed: {
+  //   currentLang() {
+  //     return this.settings.languages?.[this.lang] || {};
+  //   },
+  // },
+
+  watch: {
+    lang(newLang) {
+      this.currentLang = newLang;
     },
   },
 
@@ -390,17 +471,21 @@ export default {
   },
 
   methods: {
+    t(key) {
+      return this.translations[this.currentLang]?.[key] || this.translations.vi[key] || key;
+    },
+
     async submitContact() {
       this.successMessage = "";
       this.errorMessage = "";
 
       if (!this.form.name) {
-        this.errorMessage = "Vui lòng nhập họ tên";
+        this.errorMessage = this.t('errorName');
         return;
       }
 
       if (!this.form.phone) {
-        this.errorMessage = "Vui lòng nhập số điện thoại";
+        this.errorMessage = this.t('errorPhone');
         return;
       }
 
@@ -420,7 +505,7 @@ export default {
         });
 
         if (res.data.success) {
-          this.successMessage = "Gửi yêu cầu tư vấn thành công!";
+          this.successMessage = this.t('successMessage');
 
           this.form = {
             name: "",
@@ -429,12 +514,12 @@ export default {
             note: "",
           };
         } else {
-          this.errorMessage = res.data.message || "Có lỗi xảy ra";
+          this.errorMessage = res.data.message || this.t('errorSending');
         }
       } catch (error) {
         console.log(error);
 
-        this.errorMessage = error?.response?.data?.message || "Không thể gửi yêu cầu";
+        this.errorMessage = error?.response?.data?.message || this.t('errorSending');
       } finally {
         this.loading = false;
       }
@@ -578,4 +663,3 @@ body {
   font-family: system-ui;
 }
 </style>
-s

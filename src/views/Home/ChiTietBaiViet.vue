@@ -2,7 +2,11 @@
   <div class="news-page-bg min-h-screen flex flex-col" style="font-family:system-ui">
 
     <!-- TOP NAV -->
-    <TopNav :activeTab="activeTab" />
+   <TopNav
+  :activeTab="activeTab"
+  :lang="lang"
+  @update:lang="$emit('update:lang', $event)"
+/>
 
     <!-- HERO -->
     <section class="relative w-full overflow-hidden border-b border-white/10">
@@ -19,12 +23,12 @@
 
           <!-- BREADCRUMB -->
           <div class="flex items-center gap-2 text-white/70 text-[13px]">
-            <span>Trang chủ</span>
+            <span>{{ translations[currentLang]?.home }}</span>
 
             <i class="fa-solid fa-angle-right text-[10px]"></i>
 
             <span class="text-brand-orange font-bold">
-              {{ article?.title || 'Chi tiết bài viết' }}
+              {{ article?.title || translations[currentLang]?.articleDetail }}
             </span>
           </div>
 
@@ -72,10 +76,19 @@
               </p>
 
               <!-- CONTENT -->
-              <div v-if="article.content_vi" class="article-content" v-html="article.content_vi"></div>
-
-           
-
+            <div
+  v-if="getArticleContent()"
+  class="article-content"
+  :style="isGioiThieu
+    ? {
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        textAlign: 'start',
+        lineHeight: '1.6'
+      }
+    : {}"
+  v-html="getArticleContent()"
+></div>
           </section>
 
         </div>
@@ -92,7 +105,10 @@
     </main>
 
   </div>
+  
     <FloattingZalo />
+       <FooterWeb :subServices="subServices" :lang="currentLang" />
+
 </template>
 
 <script>
@@ -102,13 +118,14 @@ import "aos/dist/aos.css";
 import FloattingZalo from "./FloattingZalo.vue";
 import RightMenu from "./RightMenu.vue";
 import TopNav from "./TopNav.vue";
+import FooterWeb from "./FooterWeb.vue";
 
 export default {
   name: "BaiVietChiTiet",
 
   components: {
     TopNav,
-    RightMenu,  FloattingZalo,
+    RightMenu,  FloattingZalo, FooterWeb
   },
 
   props: {
@@ -131,9 +148,33 @@ export default {
   data() {
     return {
       article: null,
-
       currentLang: this.lang,
+      translations: {
+        vi: {
+          home: "Trang chủ",
+          articleDetail: "Chi tiết bài viết",
+        },
+        en: {
+          home: "Home",
+          articleDetail: "Article Detail",
+        },
+        ja: {
+          home: "ホーム",
+          articleDetail: "記事詳細",
+        },
+      },
     };
+  },
+computed: {
+  isGioiThieu() {
+    const slug = this.getSlugFromUrl();
+    return slug === "gioi-thieu";
+  }
+},
+  watch: {
+    lang(newLang) {
+      this.currentLang = newLang;
+    },
   },
 
   methods: {
@@ -178,8 +219,8 @@ export default {
           );
 
         if (res.data.success) {
-          this.article =
-            res.data.data;
+          this.article = res.data.data;
+          this.$forceUpdate();
         }
 
       } catch (error) {
@@ -190,6 +231,17 @@ export default {
 
       }
     },
+
+    getArticleContent() {
+  if (!this.article) return "";
+
+  const lang = this.currentLang === "ja" ? "jp" : this.currentLang;
+  const contentKey = `content_${lang}`;
+
+  console.log("Trying to get article content with key:", contentKey);
+
+  return this.article[contentKey] || this.article.content_vi || "";
+}
   },
 
   mounted() {

@@ -29,10 +29,10 @@
         <div class="hidden items-center gap-5 md:flex">
           <!-- MENU -->
           <nav class="flex items-center gap-2">
-            <router-link
+            <a
               v-for="item in menuItems"
               :key="item.link"
-              :to="item.link"
+              :href="item.link"
               :class="[
                 'relative overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-300',
                 $route.path === item.link
@@ -49,7 +49,7 @@
                 v-if="$route.path === item.link"
                 class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-indigo-500/10"
               />
-            </router-link>
+            </a>
           </nav>
 
           <!-- LANGUAGE -->
@@ -141,10 +141,10 @@
         class="border-t border-indigo-800/50 bg-[#0f2a4a]/95 backdrop-blur-xl md:hidden"
       >
         <div class="space-y-2 p-4">
-          <router-link
+          <a
             v-for="item in menuItems"
             :key="item.link"
-            :to="item.link"
+            :href="item.link"
             @click="mobileMenuOpen = false"
             :class="[
               'block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition-all duration-300',
@@ -154,7 +154,7 @@
             ]"
           >
             {{ getMenuLabel(item) }}
-          </router-link>
+          </a>
         </div>
       </div>
     </transition>
@@ -295,6 +295,15 @@ settings: {
     };
   },
 
+  watch: {
+    '$route'() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  },
+
   methods: {
     async fetchMenuData() {
       try {
@@ -419,14 +428,18 @@ settings: {
       // ảnh local server
       return "https://miraivietnam.com" + img;
     },
-  
+
 
   },
- currentLang() {
+
+  computed: {
+    currentLangData() {
       return (
         this.settings.languages?.[this.lang] || {}
       );
-    },
+    }
+  },
+
   mounted() {
      this.getSettings();
     this.fetchMenuData();
@@ -470,7 +483,7 @@ header {
   z-index: 999999 !important;
 }
 
-.router-link-active {
+.a-active {
   transition: all 0.3s ease;
 }
 </style>

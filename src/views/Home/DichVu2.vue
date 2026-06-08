@@ -99,7 +99,7 @@
                 target="_blank"
                 class="group/link inline-flex items-center gap-2 rounded-full bg-[#EEF3FF] px-4 py-2 text-[12px] font-bold text-[#0B5FA5] transition-all duration-300 hover:bg-[#0B5FA5] hover:text-white"
               >
-                Xem chi tiết
+                {{ getDetailButtonText() }}
 
                 <span
                   class="transition-transform duration-300 group-hover/link:translate-x-1"
@@ -126,7 +126,7 @@
     </main>
   </div>
   <FloattingZalo />
-  <FooterWeb />
+   <FooterWeb :subServices="subServices" :lang="currentLang" />
 </template>
 
 <script>
@@ -192,79 +192,95 @@ export default {
     },
   },
 
-  methods: {
-    handleLanguageChange(lang) {
-      this.currentLang = lang;
-      this.$emit("update:lang", lang);
-
-      this.fetchArticles();
-    },
-
-    async fetchArticles(cate = "service") {
-      try {
-        const response = await fetch(
-          "https://miraivietnam.com/api/quantri/baiviet",
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify({
-              idFun: 114,
-              cate,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`API returned ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        const list = Array.isArray(data)
-          ? data
-          : data.data || data.items || [];
-
-        this.services = list.slice(0, 6).map((item, index) => ({
-          id: item.id ?? item._id ?? index,
-
-          icon:
-            index % 3 === 0
-              ? "Globe"
-              : index % 3 === 1
-              ? "Briefcase"
-              : "FileText",
-
-          title:
-            this.currentLang === "en"
-              ? item.title_en || item.title_vi
-              : this.currentLang === "jp"
-              ? item.title_jp || item.title_vi
-              : item.title_vi || "Không có tiêu đề",
-
-          desc:
-            this.currentLang === "en"
-              ? item.desc_en || item.desc_vi
-              : this.currentLang === "jp"
-              ? item.desc_jp || item.desc_vi
-              : item.desc_vi || "",
-
-          img:
-            item.thumbnail &&
-            item.thumbnail.trim() !== ""
-              ? item.thumbnail
-              : this.fallbackImage,
-
-          slug: item.slug,
-        }));
-      } catch (err) {
-        console.warn("Fetch services failed:", err);
-      }
-    },
+ methods: {
+  handleLanguageChange(lang) {
+    this.currentLang = lang;
+    this.$emit("update:lang", lang);
+    this.fetchArticles();
   },
+
+  getLangKey() {
+    const map = {
+      ja: "jp",
+    };
+
+    return map[this.currentLang] || this.currentLang;
+  },
+
+  getDetailButtonText() {
+    const texts = {
+      vi: "Xem chi tiết",
+      en: "View Details",
+      ja: "詳細を表示",
+    };
+
+    return texts[this.currentLang] || texts.vi;
+  },
+
+  async fetchArticles(cate = "service") {
+    try {
+      const response = await fetch(
+        "https://miraivietnam.com/api/quantri/baiviet",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idFun: 114,
+            cate,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`API returned ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      const list = Array.isArray(data)
+        ? data
+        : data.data || data.items || [];
+
+      const lang = this.getLangKey();
+
+      this.services = list.slice(0, 6).map((item, index) => ({
+        id: item.id ?? item._id ?? index,
+
+        icon:
+          index % 3 === 0
+            ? "Globe"
+            : index % 3 === 1
+            ? "Briefcase"
+            : "FileText",
+
+        title:
+          item[`title_${lang}`] ||
+          item.title_vi ||
+          item.title ||
+          "Không có tiêu đề",
+
+        desc:
+          item[`desc_${lang}`] ||
+          item.desc_vi ||
+          item.description ||
+          item.desc ||
+          "",
+
+        img:
+          item.thumbnail && item.thumbnail.trim()
+            ? item.thumbnail
+            : this.fallbackImage,
+
+        slug: item.slug,
+      }));
+    } catch (err) {
+      console.warn("Fetch services failed:", err);
+      this.services = [];
+    }
+  },
+}
 };
 </script>
 

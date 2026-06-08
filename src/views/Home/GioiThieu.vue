@@ -70,7 +70,7 @@
       </div>
     </main>
   </div>
-  <FooterWeb />
+  <FooterWeb :subServices="subServices" :lang="currentLang" />
 </template>
 
 <script>
